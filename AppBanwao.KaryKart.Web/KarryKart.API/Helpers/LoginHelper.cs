@@ -211,5 +211,25 @@ namespace KarryKart.API.Helpers
             }
             return false;
         }
+
+        public bool ForgotPassword(string Email)
+        {
+            using (_context = new karrykartEntities()) { 
+                var usr =_context.Users.Where(x=>x.EmailAddress==Email).FirstOrDefault();
+                if (usr != null) { 
+                _emailHelper  = new APIEmailHelper();
+                string otp = Email.Substring(0,4)+CommonHelper.GenerateOTP();
+                CommonHelper.SaveOTP(otp,Email);
+                if(_emailHelper.SendOtpEmail(Email,otp,"Hunger's Click")){
+                return true;
+                }
+
+                }
+            }
+
+            return false;
+        }
+
+        bool Send
     }
 }
