@@ -1,4 +1,5 @@
 ﻿using KarryKart.API.Helpers;
+using KarryKart.API.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,8 +32,16 @@ namespace KarryKart.API.Controllers
         }
 
         // POST api/<controller>
-        public void Post([FromBody]string value)
+        public bool Post(UserSignUpModel user)
         {
+            try
+            {
+                _loginHelper = new LoginHelper();
+                return _loginHelper.VerifyOtp(user,false);
+            }
+            catch (Exception ex) {
+                return false;
+            }
         }
 
         // PUT api/<controller>/5

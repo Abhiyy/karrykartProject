@@ -60,7 +60,7 @@ namespace KarryKart.API.Controllers
             _loginHelper = new LoginHelper();
             try
             {
-                return _loginHelper.VerifyOtp(user);
+                return _loginHelper.VerifyOtp(user,true);
             }
             catch (Exception ex) {
                 return false;

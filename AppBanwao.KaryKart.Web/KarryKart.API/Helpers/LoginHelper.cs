@@ -165,7 +165,7 @@ namespace KarryKart.API.Helpers
             return userRegisterWith;
         }
 
-        public bool VerifyOtp(UserSignUpModel model)
+        public bool VerifyOtp(UserSignUpModel model,bool NeedToSendEmail=true)
         {
             _context = new karrykartEntities();
 
@@ -179,6 +179,7 @@ namespace KarryKart.API.Helpers
                 _context.Entry(user).State = System.Data.Entity.EntityState.Modified;
                 _context.SaveChanges();
                 CommonHelper.RemoveOTP(model.user);
+                if(NeedToSendEmail)
                 return SendOtpVerificationToUser(user);
             }
 
@@ -230,6 +231,6 @@ namespace KarryKart.API.Helpers
             return false;
         }
 
-        bool Send
+        
     }
 }
