@@ -37,7 +37,7 @@ namespace KarryKart.API.Controllers
             try
             {
                 _loginHelper = new LoginHelper();
-                return _loginHelper.VerifyOtp(user,false);
+                return _loginHelper.VerfiyOtpForgotPassword(user);
             }
             catch (Exception ex) {
                 return false;
@@ -45,8 +45,16 @@ namespace KarryKart.API.Controllers
         }
 
         // PUT api/<controller>/5
-        public void Put(int id, [FromBody]string value)
+        public bool Put(UserSignUpModel user)
         {
+            try
+            {
+                _loginHelper = new LoginHelper();
+                return _loginHelper.ChangePassword(user);
+            }
+            catch (Exception ex) {
+                return false;
+            }
         }
 
         // DELETE api/<controller>/5

@@ -187,6 +187,20 @@ namespace KarryKart.API.Helpers
 
         }
 
+        public bool VerfiyOtpForgotPassword(UserSignUpModel model) {
+            _context = new karrykartEntities();
+
+            var otp = _context.OTPHolders.Where(x => x.OTPAssignedTo == model.user && x.OTPValue == model.Otp).FirstOrDefault();
+            if(otp!=null)
+            {
+                CommonHelper.RemoveOTP(model.user);
+                _context = null;
+                return true;
+            }
+
+            return false;
+        }
+
         bool SendOtpVerificationToUser(User user)
         {
             if (!(string.IsNullOrEmpty(user.Mobile)))
@@ -229,6 +243,21 @@ namespace KarryKart.API.Helpers
             }
 
             return false;
+        }
+
+        public bool ChangePassword(UserSignUpModel userModel) {
+            using (_context = new karrykartEntities()) {
+                var user = _context.Users.Where(u => u.EmailAddress == userModel.user).FirstOrDefault();
+
+                if (user != null) {
+                    user.Password = EncryptionManager.ConvertToUnSecureString(EncryptionManager.EncryptData(userModel.pwd));
+                    user.LastUpdated = DateTime.Now;
+                    _context.Entry(user).State = System.Data.Entity.EntityState.Modified;
+                    _context.SaveChanges();
+                    return true;
+                }
+                return false;
+            }
         }
 
         
