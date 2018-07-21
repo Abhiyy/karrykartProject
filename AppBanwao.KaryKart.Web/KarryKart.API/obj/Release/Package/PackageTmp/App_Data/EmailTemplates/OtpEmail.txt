@@ -11,7 +11,7 @@
 
 <p>Dear {1},</p>
 
-<p>Please type the following OTP in order for your verification:</p>
+<p>Please use the following OTP in order for your verification:</p>
 <p style='font-size:20px;color:#086A87'><span>{2}</span></p>
 <br/>
 <p>Please contact us on {3}, in case of any issue.</p>
