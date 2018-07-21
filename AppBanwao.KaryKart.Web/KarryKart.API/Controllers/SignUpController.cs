@@ -48,8 +48,8 @@ namespace KarryKart.API.Controllers
                     //return Json(new { messagetype = ApplicationMessages.UserRegisterationType.MOBILEWITHERROR, message = "success" }, JsonRequestBehavior.AllowGet);
 
                 case ApplicationMessages.UserRegisterationType.USEREXIST:
-                    //return Json(new { messagetype = ApplicationMessages.UserRegisterationType.USEREXIST, message = "The user already exists. Please try with different email." }, JsonRequestBehavior.AllowGet);
-                    break;
+                    return new UserSignUpModel() { Message = "user_exist" };
+                 
             }
             return null;
         }

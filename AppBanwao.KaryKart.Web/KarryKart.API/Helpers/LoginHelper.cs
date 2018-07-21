@@ -43,7 +43,7 @@ namespace KarryKart.API.Helpers
                 }
             }
             else {
-                userInfo.Error = "Invalid username/password. Please try again.";
+                userInfo.Error = "invalid_user";
             }
 
             return userInfo;
