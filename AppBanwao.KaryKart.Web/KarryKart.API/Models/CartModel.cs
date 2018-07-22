@@ -14,6 +14,7 @@ namespace KarryKart.API.Models
         public Guid User { get; set; }
         public int  ProductCount { get; set; }
         public string UserName { get; set; }
+        public bool IsQuantityUpdate { get; set; }
         
     }
 

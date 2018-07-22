@@ -17,7 +17,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/25/2018 02:06:26</publishTime>
     </File>
     <File Include="App_Data/EmailTemplates/OtpEmail.txt">
-      <publishTime>07/17/2018 08:12:53</publishTime>
+      <publishTime>07/21/2018 23:56:34</publishTime>
     </File>
     <File Include="App_Data/EmailTemplates/OtpVerificationEmail.txt">
       <publishTime>05/25/2018 01:54:37</publishTime>
@@ -47,7 +47,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/02/2016 22:03:27</publishTime>
     </File>
     <File Include="bin/KarryKart.API.dll">
-      <publishTime>07/21/2018 23:33:37</publishTime>
+      <publishTime>07/22/2018 17:58:50</publishTime>
     </File>
     <File Include="bin/Microsoft.Web.Infrastructure.dll">
       <publishTime>02/02/2016 22:03:29</publishTime>
@@ -167,7 +167,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/10/2017 09:31:53</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>07/21/2018 23:33:39</publishTime>
+      <publishTime>07/22/2018 17:58:51</publishTime>
     </File>
   </ItemGroup>
 </Project>

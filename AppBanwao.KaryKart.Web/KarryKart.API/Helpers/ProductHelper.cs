@@ -2,6 +2,7 @@
 using KarryKart.API.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 
@@ -10,6 +11,8 @@ namespace KarryKart.API.Helpers
     public class ProductHelper
     {
         karrykartEntities _context = null;
+        bool _IsDev = ConfigurationManager.AppSettings["IsDev"].ToString()=="true"?true:false;
+        string _WebPortalLink = ConfigurationManager.AppSettings["WebPortalLink"].ToString();
 
         public List<ProductModel> GetSearchedProduct(string searchText)
         {
@@ -131,9 +134,11 @@ namespace KarryKart.API.Helpers
             List<ProductImages> lstImages = new List<ProductImages>();
             ProductImages objImage = null;
 
+            
+
             foreach (var img in product.ProductImages)
             {
-                objImage = new ProductImages() { ImageID = img.ImageID,ImageLink=img.ImageLink.Replace("~","../..")};
+                objImage = new ProductImages() { ImageID = img.ImageID,ImageLink= img.ImageLink.Replace("~",_WebPortalLink)};
                 lstImages.Add(objImage);
                 objImage = null;
             }

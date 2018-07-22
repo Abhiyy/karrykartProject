@@ -40,7 +40,14 @@ namespace KarryKart.API.Helpers
                 var product = cart.CartProducts.Where(x => x.ProductID == cartModel.ProductID).FirstOrDefault();
                 if (product!=null)
                 {
-                    product.Quantity = product.Quantity + 1;
+                    if (cartModel.IsQuantityUpdate)
+                    {
+                       product.Quantity = cartModel.Quantity;
+                    }
+                    else
+                    {
+                       product.Quantity = product.Quantity + 1;
+                    }
                     _context.Entry(product).State = System.Data.Entity.EntityState.Modified;
 
                 }
