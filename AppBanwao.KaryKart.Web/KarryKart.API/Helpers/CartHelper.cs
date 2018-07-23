@@ -61,6 +61,54 @@ namespace KarryKart.API.Helpers
             return cartModel;
         }
 
+        public CartModel DeleteCart(Guid CartID)
+        {
+            _context = new karrykartEntities();
+
+            var cart = _context.Carts.Find(CartID);
+            if (cart != null)
+            {
+               // var products = cart.CartProducts.Where(x => x.CartID == CartID);
+               // if (products != null)
+               // {
+               ////     foreach (var p in products)
+               // //    {
+               //         _context.Entry(products).State = System.Data.Entity.EntityState.Deleted;
+               ////     }
+
+               // }
+                _context.Entry(cart).State = System.Data.Entity.EntityState.Deleted;
+                _context.SaveChanges();
+                return new CartModel();
+            }
+            return null;
+        }
+
+        public CartModel DeleteCart(Guid CartID, Guid ProductID)
+        {
+            _context = new karrykartEntities();
+
+            var cart = _context.Carts.Find(CartID);
+            if (cart != null)
+            {
+                var products = cart.CartProducts.Where(x => x.ProductID == ProductID).FirstOrDefault();
+                if (products != null)
+                {
+                    _context.Entry(products).State = System.Data.Entity.EntityState.Deleted;
+                }
+                _context.SaveChanges();
+                if (cart.CartProducts.Count == 0) {
+                    _context.Entry(cart).State = System.Data.Entity.EntityState.Deleted;
+                    _context.SaveChanges();
+
+                    return null;
+                }
+                return new CartModel() { CartID = CartID };
+            }
+            return null;
+        }
+
+
         public CartDetailsModel GetCart(Guid CartID)
         { 
          

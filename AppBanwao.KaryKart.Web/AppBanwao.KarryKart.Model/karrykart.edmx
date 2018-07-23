@@ -662,7 +662,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_CartProducts_Cart">
-          <End Role="Cart" Type="KarrykartModel.Store.Cart" Multiplicity="0..1" />
+          <End Role="Cart" Type="KarrykartModel.Store.Cart" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="CartProduct" Type="KarrykartModel.Store.CartProduct" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Cart">

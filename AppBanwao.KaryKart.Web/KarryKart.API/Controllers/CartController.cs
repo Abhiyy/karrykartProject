@@ -63,8 +63,27 @@ namespace KarryKart.API.Controllers
         }
 
         // DELETE api/<controller>/5
-        public void Delete(int id)
+        public CartModel Delete(Guid CartID, Guid ProductID)
         {
+            try
+            {
+                _cartHelper = new CartHelper();
+                if (ProductID != Guid.Parse("559B9891-FE58-49DD-A357-B7ADC2CC339A"))
+                {
+                    return _cartHelper.DeleteCart(CartID, ProductID);
+                }
+                else {
+
+                    if (_cartHelper.DeleteCart(CartID) != null)
+                        return null;
+                        
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+            return null;
         }
     }
 }
