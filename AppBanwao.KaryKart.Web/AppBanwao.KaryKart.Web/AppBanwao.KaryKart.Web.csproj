@@ -148,6 +148,7 @@
     <Compile Include="Controllers\ProductSettingsController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\SliderController.cs" />
+    <Compile Include="Controllers\SmsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -174,6 +175,7 @@
     <Compile Include="Models\SizeModel.cs" />
     <Compile Include="Models\SizeTypeModel.cs" />
     <Compile Include="Models\SliderModel.cs" />
+    <Compile Include="Models\SmsModel.cs" />
     <Compile Include="Models\SubcategoryModel.cs" />
     <Compile Include="Models\UnitModel.cs" />
     <Compile Include="Models\UserModel.cs" />

@@ -150,6 +150,7 @@
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\SignUpController.cs" />
+    <Compile Include="Controllers\SmsController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -160,10 +161,12 @@
     <Compile Include="Helpers\MenuHelper.cs" />
     <Compile Include="Helpers\OrderHelper.cs" />
     <Compile Include="Helpers\ProductHelper.cs" />
+    <Compile Include="Helpers\SmsHelper.cs" />
     <Compile Include="Models\CartModel.cs" />
     <Compile Include="Models\MenuModel.cs" />
     <Compile Include="Models\OrderModel.cs" />
     <Compile Include="Models\ProductModel.cs" />
+    <Compile Include="Models\SmsModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

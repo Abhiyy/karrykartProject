@@ -12,6 +12,7 @@ namespace KarryKart.API.Helpers
     {
         karrykartEntities _context = null;
         APIEmailHelper _emailHelper = null;
+        SmsHelper _smsHelper = null;
         public OrderModel CreateOrder(Guid CartID, string email, string contact, string name)
         {
             using (_context = new karrykartEntities())
@@ -33,7 +34,10 @@ namespace KarryKart.API.Helpers
 
                     _emailHelper = new APIEmailHelper();
                     _emailHelper.SendOrderPlacedEmail(email, order.ID,name);
-
+                    string smsMsg ="Hi " + name + ", thank you for placing order with us. Your order will be confirmed shortly.";
+                    _smsHelper = new SmsHelper();
+                    _smsHelper.SendOrderConfirmationToUser(new SmsModel() { Message =smsMsg , Number = contact });
+                    _smsHelper = null;
                     var orderDetail = new OrderModel() { OrderID = order.ID, OrderPlaced = true };
                     return orderDetail;
                 }

@@ -143,7 +143,7 @@ namespace KarryKart.API.Helpers
             {
                 if (!(string.IsNullOrEmpty(user.Mobile)))
                 {
-                    SmsHelper.SendRegisterMessage(user.Mobile);
+                //    SmsHelper.SendRegisterMessage(user.Mobile);
                     userRegisterWith = ApplicationMessages.UserRegisterationType.MOBILE;
                 }
                 if (!(string.IsNullOrEmpty(user.EmailAddress)))
@@ -205,7 +205,7 @@ namespace KarryKart.API.Helpers
         {
             if (!(string.IsNullOrEmpty(user.Mobile)))
             {
-                SmsHelper.SendVerificationMessage(user.Mobile);
+              //  SmsHelper.SendVerificationMessage(user.Mobile);
                 return true;
             }
             if (!(string.IsNullOrEmpty(user.EmailAddress)))
