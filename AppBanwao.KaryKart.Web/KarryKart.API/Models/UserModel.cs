@@ -35,9 +35,9 @@ namespace KarryKart.API.Models
         public string AddressLine1 { get; set; }
         public string AddressLine2 { get; set; }
         public string City { get; set; }
-        //public int CityID { get; set; }
-        //public int StateID { get; set; }
-        //public int CountryID { get; set; }
+        public int CityID { get; set; }
+        public int StateID { get; set; }
+        public int CountryID { get; set; }
         public string State { get; set; }
         public string Country { get; set; }
         public string LandMark { get; set; }
@@ -54,9 +54,9 @@ namespace KarryKart.API.Models
             this.LandMark = address.Landmark;
             this.PinCode = address.Pincode;
             this.State = context.refStates.Find(address.StateID).Name;
-            //this.StateID = address.StateID.Value;
-            //this.CountryID = address.CountryID.Value;
-            //this.CityID = address.CityID.Value;
+            this.StateID = address.StateID.Value;
+            this.CountryID = address.CountryID.Value;
+            this.CityID = address.CityID.Value;
         }
     }
 
@@ -73,7 +73,7 @@ namespace KarryKart.API.Models
 
         public UserDetails() { }
 
-        public UserDetails(User user, karrykartEntities context)
+        public UserDetails(User user, karrykartEntities context, int AddressID=-1)
         {
             this.UserID = user.UserID;
             this.Email = user.EmailAddress;
@@ -86,8 +86,16 @@ namespace KarryKart.API.Models
             {
                 foreach (var userAddress in user.UserAddressDetails)
                 {
-                    if(!string.IsNullOrEmpty(userAddress.AddressLine1))
-                        this.AddressList.Add(new UserAddress(userAddress, context));
+                    if (AddressID != -1)
+                    {
+                        if (userAddress.AddressID == AddressID)
+                            if (!string.IsNullOrEmpty(userAddress.AddressLine1))
+                                this.AddressList.Add(new UserAddress(userAddress, context));
+                    }
+                    else {
+                        if (!string.IsNullOrEmpty(userAddress.AddressLine1))
+                            this.AddressList.Add(new UserAddress(userAddress, context));
+                    }
                 }
             }
         }

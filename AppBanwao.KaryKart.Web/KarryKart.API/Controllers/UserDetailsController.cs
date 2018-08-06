@@ -19,13 +19,16 @@ namespace KarryKart.API.Controllers
         }
 
         // GET api/<controller>/5
-        public UserDetails Get(Guid id)
+        public UserDetails Get(Guid id, int AddressID=-1)
         {
             try
             {
                 _loginHelper = new LoginHelper();
 
-               return _loginHelper.GetUser(id);
+                if (AddressID != -1)
+                    return _loginHelper.GetUser(id, AddressID);
+                else
+                    return _loginHelper.GetUser(id);
             }
             catch (Exception ex)
             {
@@ -56,8 +59,19 @@ namespace KarryKart.API.Controllers
         }
 
         // DELETE api/<controller>/5
-        public void Delete(int id)
+        public UserDetails Delete(Guid id, int AddressID = -1)
         {
+            try
+            {
+                _loginHelper = new LoginHelper();
+
+                return _loginHelper.RemoveUserAddress(id,AddressID);
+
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
     }
 }

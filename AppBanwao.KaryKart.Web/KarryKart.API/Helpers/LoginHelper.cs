@@ -260,13 +260,13 @@ namespace KarryKart.API.Helpers
             }
         }
 
-        public UserDetails GetUser(Guid Id)
+        public UserDetails GetUser(Guid Id,int AddressID=-1)
         {
             using (_context = new karrykartEntities()) {
 
                 var usr = _context.Users.Find(Id);
                 if (usr != null) {
-                    return new UserDetails(usr,_context);
+                    return new UserDetails(usr,_context,AddressID);
                 }
             }
             return null;
@@ -334,9 +334,43 @@ namespace KarryKart.API.Helpers
                     }
 
                 }
+                else
+                {
+                    _context.UserAddressDetails.Add(new UserAddressDetail()
+                    {
+                        AddressLine1 = user.AddressLine1,
+                        AddressLine2 = user.AddressLine2,
+                        CityID = user.CityID,
+                        CountryID = user.CountryID,
+                        Landmark = user.LandMark,
+                        Pincode = user.PinCode,
+                        StateID = user.StateID,
+                        UserID = user.UserID
+
+                    });
+                    _context.SaveChanges();
+                }
             }
 
             return GetUser(user.UserID);
+        }
+
+        public UserDetails RemoveUserAddress(Guid Id, int AddressID = -1)
+        {
+            using (_context = new karrykartEntities())
+            {
+                var userAddress = _context.UserAddressDetails.Where(x => x.UserID == Id && x.AddressID==AddressID).FirstOrDefault();
+
+                if (userAddress != null)
+                {
+                    _context.Entry(userAddress).State = System.Data.Entity.EntityState.Deleted;
+                    _context.SaveChanges();
+                   
+
+                }
+            }
+
+            return GetUser(Id);
         }
     }
 }
