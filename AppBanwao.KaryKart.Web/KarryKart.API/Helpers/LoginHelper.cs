@@ -260,6 +260,83 @@ namespace KarryKart.API.Helpers
             }
         }
 
-        
+        public UserDetails GetUser(Guid Id)
+        {
+            using (_context = new karrykartEntities()) {
+
+                var usr = _context.Users.Find(Id);
+                if (usr != null) {
+                    return new UserDetails(usr,_context);
+                }
+            }
+            return null;
+
+        }
+
+        public UserDetails AddUserAddress(AddUserAddressModel user)
+        {
+            using (_context = new karrykartEntities()) {
+                var usr = _context.Users.Find(user.UserID);
+
+                if (usr != null) {
+                    
+                    if (string.IsNullOrEmpty(usr.EmailAddress))
+                    {
+                        usr.EmailAddress = user.Email;
+                    }
+
+                    usr.Mobile = user.Phone;
+                    usr.LastUpdated = DateTime.UtcNow;
+                    usr.ProfileComplete = true;
+                    _context.Entry(usr).State = System.Data.Entity.EntityState.Modified;
+                }
+                
+                var userDetails = _context.UserDetails.Where(x => x.UserID == user.UserID).FirstOrDefault();
+                if (userDetails != null) {
+                    if (string.IsNullOrEmpty(userDetails.FirstName))
+                    {
+                        userDetails.FirstName = user.FirstName;
+                        userDetails.LastName = user.LastName;
+                        _context.Entry(userDetails).State = System.Data.Entity.EntityState.Modified;
+                        _context.SaveChanges();
+
+                    }
+                }
+
+                var userAddress = _context.UserAddressDetails.Where(x => x.UserID == user.UserID).FirstOrDefault();
+
+                if (userAddress != null) {
+                    if (string.IsNullOrEmpty(userAddress.AddressLine1))
+                    {
+                        userAddress.AddressLine1 = user.AddressLine1;
+                        userAddress.AddressLine2 = user.AddressLine2;
+                        userAddress.CityID = user.CityID;
+                        userAddress.StateID = user.StateID;
+                        userAddress.CountryID = user.CountryID;
+                        userAddress.Landmark = user.LandMark;
+                        userAddress.Pincode = user.PinCode;
+                        _context.Entry(userAddress).State = System.Data.Entity.EntityState.Modified;
+                        _context.SaveChanges();
+                    }
+                    else {
+                        _context.UserAddressDetails.Add(new UserAddressDetail() { 
+                                                        AddressLine1 = user.AddressLine1,
+                                                        AddressLine2=user.AddressLine2,
+                                                        CityID = user.CityID,
+                                                        CountryID =user.CountryID,
+                                                        Landmark = user.LandMark,
+                                                        Pincode = user.PinCode,
+                                                        StateID = user.StateID,
+                                                        UserID = user.UserID
+
+                                                        });
+                        _context.SaveChanges();
+                    }
+
+                }
+            }
+
+            return GetUser(user.UserID);
+        }
     }
 }
