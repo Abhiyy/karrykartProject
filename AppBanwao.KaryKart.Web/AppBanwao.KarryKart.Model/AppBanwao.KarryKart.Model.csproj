@@ -116,6 +116,9 @@
     <Compile Include="OTPHolder.cs">
       <DependentUpon>karrykart.tt</DependentUpon>
     </Compile>
+    <Compile Include="Payment.cs">
+      <DependentUpon>karrykart.tt</DependentUpon>
+    </Compile>
     <Compile Include="Product.cs">
       <DependentUpon>karrykart.tt</DependentUpon>
     </Compile>

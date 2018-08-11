@@ -22,6 +22,7 @@
           <EntitySet Name="Order" EntityType="KarrykartModel.Store.Order" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="OrderProduct" EntityType="KarrykartModel.Store.OrderProduct" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="OTPHolder" EntityType="KarrykartModel.Store.OTPHolder" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Payment" EntityType="KarrykartModel.Store.Payment" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Product" EntityType="KarrykartModel.Store.Product" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ProductFeature" EntityType="KarrykartModel.Store.ProductFeature" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ProductImage" EntityType="KarrykartModel.Store.ProductImage" store:Type="Tables" Schema="dbo" />
@@ -112,6 +113,10 @@
           <AssociationSet Name="FK_CartProducts_Cart" Association="KarrykartModel.Store.FK_CartProducts_Cart">
             <End Role="Cart" EntitySet="Cart" />
             <End Role="CartProduct" EntitySet="CartProduct" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Payment" Association="KarrykartModel.Store.FK_Order_Payment">
+            <End Role="Payment" EntitySet="Payment" />
+            <End Role="Order" EntitySet="Order" />
           </AssociationSet>
           <AssociationSet Name="FK_OrderProduct_Order" Association="KarrykartModel.Store.FK_OrderProduct_Order">
             <End Role="Order" EntitySet="Order" />
@@ -258,6 +263,7 @@
           <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="CartID" Type="uniqueidentifier" />
           <Property Name="UserID" Type="uniqueidentifier" />
+          <Property Name="PaymentID" Type="uniqueidentifier" />
         </EntityType>
         <EntityType Name="OrderProduct">
           <Key>
@@ -275,6 +281,16 @@
           <Property Name="OTPID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="OTPValue" Type="varchar" MaxLength="50" />
           <Property Name="OTPAssignedTo" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Payment">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Reference" Type="varchar" MaxLength="50" />
+          <Property Name="Amount" Type="decimal" Precision="9" Scale="2" />
+          <Property Name="Type" Type="int" />
+          <Property Name="IsSuccessful" Type="bit" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -675,6 +691,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Order_Payment">
+          <End Role="Payment" Type="KarrykartModel.Store.Payment" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Order" Type="KarrykartModel.Store.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Payment">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="PaymentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_OrderProduct_Order">
           <End Role="Order" Type="KarrykartModel.Store.Order" Multiplicity="0..1" />
           <End Role="OrderProduct" Type="KarrykartModel.Store.OrderProduct" Multiplicity="*" />
@@ -882,6 +912,11 @@
           <AssociationSet Name="FK_UserLogin_Users" Association="KarrykartModel.FK_UserLogin_Users">
             <End Role="User" EntitySet="Users" />
             <End Role="UserLogin" EntitySet="UserLogins" />
+          </AssociationSet>
+          <EntitySet Name="Payments" EntityType="KarrykartModel.Payment" />
+          <AssociationSet Name="FK_Order_Payment" Association="KarrykartModel.FK_Order_Payment">
+            <End Role="Payment" EntitySet="Payments" />
+            <End Role="Order" EntitySet="Orders" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Brand">
@@ -1426,6 +1461,8 @@
           <Property Type="Guid" Name="CartID" />
           <Property Type="Guid" Name="UserID" />
           <NavigationProperty Name="OrderProducts" Relationship="KarrykartModel.FK_OrderProduct_Order" FromRole="Order" ToRole="OrderProduct" />
+          <Property Type="Guid" Name="PaymentID" />
+          <NavigationProperty Name="Payment" Relationship="KarrykartModel.FK_Order_Payment" FromRole="Order" ToRole="Payment" />
         </EntityType>
         <EntityType Name="OrderProduct">
           <Key>
@@ -1536,6 +1573,31 @@
             </Principal>
             <Dependent Role="UserLogin">
               <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Payment">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Guid" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Reference" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="Amount" Precision="9" Scale="2" />
+          <Property Type="Int32" Name="Type" />
+          <Property Type="Boolean" Name="IsSuccessful" />
+          <NavigationProperty Name="Orders" Relationship="KarrykartModel.FK_Order_Payment" FromRole="Payment" ToRole="Order" />
+        </EntityType>
+        <Association Name="FK_Order_Payment">
+          <End Type="KarrykartModel.Payment" Role="Payment" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="KarrykartModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Payment">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="PaymentID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1857,6 +1919,7 @@
           <EntitySetMapping Name="Orders">
             <EntityTypeMapping TypeName="KarrykartModel.Order">
               <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="PaymentID" ColumnName="PaymentID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="CartID" ColumnName="CartID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
@@ -1896,6 +1959,17 @@
                 <ScalarProperty Name="Mobile" ColumnName="Mobile" />
                 <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Payments">
+            <EntityTypeMapping TypeName="KarrykartModel.Payment">
+              <MappingFragment StoreEntitySet="Payment">
+                <ScalarProperty Name="IsSuccessful" ColumnName="IsSuccessful" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Reference" ColumnName="Reference" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

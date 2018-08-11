@@ -1,7 +1,8 @@
 ﻿<html>
 <body style="color:grey; font-size:15px;">
 <font face="Helvetica, Arial, sans-serif">
-
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 <div style="position:absolute; text-align:center;height:100px; width:600px; padding:30px;">
 <img src={0} />
 <p>Food-Groceries-Cakes</p>
@@ -11,10 +12,13 @@
 
 <p>Dear {1},</p>
 
-<p>Your Order has been placed successfully. We will contact you shortly with your order details. This is Cash on delivery order.</p>
+
+<div>
+{2}
+</div>
 
 <br/>
-<p>Please contact us on {2}, in case of any issue. Also do keep the Order ID for your reference.</p>
+<p>Please contact us on {3}, in case of any issue. Also do keep the Order ID for your reference.</p>
 <p>Thank you</p>
 <p>KarryKart Team</p>
 </div>

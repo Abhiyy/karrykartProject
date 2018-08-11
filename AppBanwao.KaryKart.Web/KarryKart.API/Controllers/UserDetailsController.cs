@@ -54,8 +54,19 @@ namespace KarryKart.API.Controllers
         }
 
         // PUT api/<controller>/5
-        public void Put(int id, [FromBody]string value)
+        public UserDetails Put(AddUserAddressModel user)
         {
+            try
+            {
+                _loginHelper = new LoginHelper();
+
+                return _loginHelper.EditUserAddress(user);
+
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
 
         // DELETE api/<controller>/5

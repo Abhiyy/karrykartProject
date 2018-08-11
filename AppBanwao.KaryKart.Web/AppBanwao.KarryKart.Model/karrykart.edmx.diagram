@@ -64,6 +64,8 @@
         <AssociationConnector Association="KarrykartModel.FK_UserAddressDetail_Users" />
         <AssociationConnector Association="KarrykartModel.FK_UserDetail_Users" />
         <AssociationConnector Association="KarrykartModel.FK_UserLogin_Users" />
+        <EntityTypeShape EntityType="KarrykartModel.Payment" Width="1.5" PointX="6.5326817736647476" PointY="9.7985464529127562" />
+        <AssociationConnector Association="KarrykartModel.FK_Order_Payment" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

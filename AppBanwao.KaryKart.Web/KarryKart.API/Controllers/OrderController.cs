@@ -30,7 +30,7 @@ namespace KarryKart.API.Controllers
             try {
                 _orderHelper = new OrderHelper();
 
-                return _orderHelper.CreateOrder(model.CartID, model.Email, model.Contact, model.Name);
+                return _orderHelper.CreateOrder(model);
             }
             catch (Exception ex) {
 

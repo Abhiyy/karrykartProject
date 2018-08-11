@@ -355,6 +355,63 @@ namespace KarryKart.API.Helpers
             return GetUser(user.UserID);
         }
 
+        public UserDetails EditUserAddress(AddUserAddressModel user)
+        {
+            using (_context = new karrykartEntities())
+            {
+                var usr = _context.Users.Find(user.UserID);
+
+                if (usr != null)
+                {
+
+                    if (string.IsNullOrEmpty(usr.EmailAddress))
+                    {
+                        usr.EmailAddress = user.Email;
+                    }
+
+                    usr.Mobile = user.Phone;
+                    usr.LastUpdated = DateTime.UtcNow;
+                    usr.ProfileComplete = true;
+                    _context.Entry(usr).State = System.Data.Entity.EntityState.Modified;
+                }
+
+                var userDetails = _context.UserDetails.Where(x => x.UserID == user.UserID).FirstOrDefault();
+                if (userDetails != null)
+                {
+                    if (string.IsNullOrEmpty(userDetails.FirstName))
+                    {
+                        userDetails.FirstName = user.FirstName;
+                        userDetails.LastName = user.LastName;
+                        _context.Entry(userDetails).State = System.Data.Entity.EntityState.Modified;
+                        _context.SaveChanges();
+
+                    }
+                }
+
+                var userAddress = _context.UserAddressDetails.Where(x => x.UserID == user.UserID && x.AddressID==user.AddressID).FirstOrDefault();
+
+                if (userAddress != null)
+                {
+                   
+                        userAddress.AddressLine1 = user.AddressLine1;
+                        userAddress.AddressLine2 = user.AddressLine2;
+                        userAddress.CityID = user.CityID;
+                        userAddress.StateID = user.StateID;
+                        userAddress.CountryID = user.CountryID;
+                        userAddress.Landmark = user.LandMark;
+                        userAddress.Pincode = user.PinCode;
+                        _context.Entry(userAddress).State = System.Data.Entity.EntityState.Modified;
+                        _context.SaveChanges();
+                   
+
+                }
+               
+               
+            }
+
+            return GetUser(user.UserID);
+        }
+
         public UserDetails RemoveUserAddress(Guid Id, int AddressID = -1)
         {
             using (_context = new karrykartEntities())

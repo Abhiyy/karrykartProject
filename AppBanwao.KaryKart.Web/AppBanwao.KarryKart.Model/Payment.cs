@@ -12,19 +12,19 @@ namespace AppBanwao.KarryKart.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Order
+    public partial class Payment
     {
-        public Order()
+        public Payment()
         {
-            this.OrderProducts = new HashSet<OrderProduct>();
+            this.Orders = new HashSet<Order>();
         }
     
         public System.Guid ID { get; set; }
-        public Nullable<System.Guid> CartID { get; set; }
-        public Nullable<System.Guid> UserID { get; set; }
-        public Nullable<System.Guid> PaymentID { get; set; }
+        public string Reference { get; set; }
+        public Nullable<decimal> Amount { get; set; }
+        public Nullable<int> Type { get; set; }
+        public Nullable<bool> IsSuccessful { get; set; }
     
-        public virtual ICollection<OrderProduct> OrderProducts { get; set; }
-        public virtual Payment Payment { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }

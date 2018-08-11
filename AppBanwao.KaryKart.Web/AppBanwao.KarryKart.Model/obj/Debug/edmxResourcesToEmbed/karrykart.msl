@@ -313,6 +313,7 @@
     <EntitySetMapping Name="Orders">
       <EntityTypeMapping TypeName="KarrykartModel.Order">
         <MappingFragment StoreEntitySet="Order">
+          <ScalarProperty Name="PaymentID" ColumnName="PaymentID" />
           <ScalarProperty Name="UserID" ColumnName="UserID" />
           <ScalarProperty Name="CartID" ColumnName="CartID" />
           <ScalarProperty Name="ID" ColumnName="ID" />
@@ -352,6 +353,17 @@
           <ScalarProperty Name="Mobile" ColumnName="Mobile" />
           <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
           <ScalarProperty Name="UserID" ColumnName="UserID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Payments">
+      <EntityTypeMapping TypeName="KarrykartModel.Payment">
+        <MappingFragment StoreEntitySet="Payment">
+          <ScalarProperty Name="IsSuccessful" ColumnName="IsSuccessful" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="Reference" ColumnName="Reference" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

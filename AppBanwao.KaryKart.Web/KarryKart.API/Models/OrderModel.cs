@@ -13,8 +13,9 @@ namespace KarryKart.API.Models
 
     public class OrderInputModel {
         public Guid CartID { get; set; }
-        public string Email { get; set; }
-        public string Contact { get; set; }
-        public string Name { get; set; }
+        public Guid UserID { get; set; }
+        public int AddressID { get; set; }
+        public bool GuestCheckout { get; set; }
+        public int PaymentType { get; set; }
     }
 }

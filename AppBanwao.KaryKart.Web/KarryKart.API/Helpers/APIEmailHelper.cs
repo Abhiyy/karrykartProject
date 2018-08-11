@@ -84,7 +84,7 @@ namespace AppBanwao.KaryKart.Web.Helpers
             return false;
         }
 
-        public bool SendOrderPlacedEmail(string toEmail, Guid OrderID, string name, string Brand = "KarryKart.com")
+        public bool SendOrderPlacedEmail(string name, string toEmail, string orderHtml,string Brand = "KarryKart.com")
         {
 
             string body;
@@ -96,9 +96,9 @@ namespace AppBanwao.KaryKart.Web.Helpers
                     body = sr.ReadToEnd();
                 }
 
-                string messagebody = string.Format(body, _companyLogo, name, _supportPhone);
+                string messagebody = string.Format(body, _companyLogo, name, orderHtml, _supportPhone);
 
-                return SendEmail(string.Format("{0}- Order Placed: OrderID -",Brand) + OrderID, messagebody, toEmail);
+                return SendEmail(string.Format("{0}- Order Placed: ",Brand), messagebody, toEmail);
 
             }
             catch (Exception ex)
