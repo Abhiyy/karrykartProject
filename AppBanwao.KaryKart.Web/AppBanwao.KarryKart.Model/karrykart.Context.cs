@@ -61,5 +61,7 @@ namespace AppBanwao.KarryKart.Model
         public DbSet<UserLogin> UserLogins { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Payment> Payments { get; set; }
+        public DbSet<GuestUserDetail> GuestUserDetails { get; set; }
+        public DbSet<ImportantValue> ImportantValues { get; set; }
     }
 }

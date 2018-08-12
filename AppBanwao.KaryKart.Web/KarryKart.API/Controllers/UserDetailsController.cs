@@ -19,16 +19,25 @@ namespace KarryKart.API.Controllers
         }
 
         // GET api/<controller>/5
-        public UserDetails Get(Guid id, int AddressID=-1)
+        public UserDetails Get(Guid id, int AddressID=-1,bool GuestUser=false)
         {
             try
             {
                 _loginHelper = new LoginHelper();
+                 if (GuestUser && AddressID == 0)
+                    {
+                        return _loginHelper.GetGuestUserDetails(id);
+                    }
 
-                if (AddressID != -1)
-                    return _loginHelper.GetUser(id, AddressID);
-                else
-                    return _loginHelper.GetUser(id);
+                  if (AddressID != -1)
+                  {
+                      return _loginHelper.GetUser(id, AddressID);
+                  }
+                  else
+                  {
+
+                      return _loginHelper.GetUser(id);
+                  }
             }
             catch (Exception ex)
             {

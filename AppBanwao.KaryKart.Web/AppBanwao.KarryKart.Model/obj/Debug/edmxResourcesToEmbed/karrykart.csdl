@@ -137,6 +137,8 @@
       <End Role="Payment" EntitySet="Payments" />
       <End Role="Order" EntitySet="Orders" />
     </AssociationSet>
+    <EntitySet Name="GuestUserDetails" EntityType="KarrykartModel.GuestUserDetail" />
+    <EntitySet Name="ImportantValues" EntityType="KarrykartModel.ImportantValue" />
   </EntityContainer>
   <EntityType Name="Brand">
     <Key>
@@ -682,6 +684,7 @@
     <NavigationProperty Name="OrderProducts" Relationship="KarrykartModel.FK_OrderProduct_Order" FromRole="Order" ToRole="OrderProduct" />
     <Property Type="Guid" Name="PaymentID" />
     <NavigationProperty Name="Payment" Relationship="KarrykartModel.FK_Order_Payment" FromRole="Order" ToRole="Payment" />
+    <Property Type="Int32" Name="Status" />
   </EntityType>
   <EntityType Name="OrderProduct">
     <Key>
@@ -820,4 +823,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="GuestUserDetail">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Guid" Name="ID" Nullable="false" />
+    <Property Type="String" Name="FirstName" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="LastName" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="Phone" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="EmailAddress" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="AddressLine1" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="AddressLine2" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="LandMark" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="CityID" />
+    <Property Type="Int32" Name="StateID" />
+    <Property Type="Int32" Name="CountryID" />
+    <Property Type="String" Name="Pincode" MaxLength="10" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="ImportantValue">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="Description" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="Value" />
+    <Property Type="String" Name="Type" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
 </Schema>

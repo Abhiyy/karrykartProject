@@ -85,6 +85,12 @@
     <Compile Include="DeliverySlot.cs">
       <DependentUpon>karrykart.tt</DependentUpon>
     </Compile>
+    <Compile Include="GuestUserDetail.cs">
+      <DependentUpon>karrykart.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ImportantValue.cs">
+      <DependentUpon>karrykart.tt</DependentUpon>
+    </Compile>
     <Compile Include="karrykart.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -276,123 +276,193 @@ namespace KarryKart.API.Helpers
         public UserDetails AddUserAddress(AddUserAddressModel user)
         {
             using (_context = new karrykartEntities()) {
-                var usr = _context.Users.Find(user.UserID);
-
-                if (usr != null) {
-                    
-                    if (string.IsNullOrEmpty(usr.EmailAddress))
-                    {
-                        usr.EmailAddress = user.Email;
-                    }
-
-                    usr.Mobile = user.Phone;
-                    usr.LastUpdated = DateTime.UtcNow;
-                    usr.ProfileComplete = true;
-                    _context.Entry(usr).State = System.Data.Entity.EntityState.Modified;
-                }
-                
-                var userDetails = _context.UserDetails.Where(x => x.UserID == user.UserID).FirstOrDefault();
-                if (userDetails != null) {
-                    if (string.IsNullOrEmpty(userDetails.FirstName))
-                    {
-                        userDetails.FirstName = user.FirstName;
-                        userDetails.LastName = user.LastName;
-                        _context.Entry(userDetails).State = System.Data.Entity.EntityState.Modified;
-                        _context.SaveChanges();
-
-                    }
-                }
-
-                var userAddress = _context.UserAddressDetails.Where(x => x.UserID == user.UserID).FirstOrDefault();
-
-                if (userAddress != null) {
-                    if (string.IsNullOrEmpty(userAddress.AddressLine1))
-                    {
-                        userAddress.AddressLine1 = user.AddressLine1;
-                        userAddress.AddressLine2 = user.AddressLine2;
-                        userAddress.CityID = user.CityID;
-                        userAddress.StateID = user.StateID;
-                        userAddress.CountryID = user.CountryID;
-                        userAddress.Landmark = user.LandMark;
-                        userAddress.Pincode = user.PinCode;
-                        _context.Entry(userAddress).State = System.Data.Entity.EntityState.Modified;
-                        _context.SaveChanges();
-                    }
-                    else {
-                        _context.UserAddressDetails.Add(new UserAddressDetail() { 
-                                                        AddressLine1 = user.AddressLine1,
-                                                        AddressLine2=user.AddressLine2,
-                                                        CityID = user.CityID,
-                                                        CountryID =user.CountryID,
-                                                        Landmark = user.LandMark,
-                                                        Pincode = user.PinCode,
-                                                        StateID = user.StateID,
-                                                        UserID = user.UserID
-
-                                                        });
-                        _context.SaveChanges();
-                    }
-
-                }
-                else
+                if (!user.GuestCheckout)
                 {
-                    _context.UserAddressDetails.Add(new UserAddressDetail()
-                    {
-                        AddressLine1 = user.AddressLine1,
-                        AddressLine2 = user.AddressLine2,
-                        CityID = user.CityID,
-                        CountryID = user.CountryID,
-                        Landmark = user.LandMark,
-                        Pincode = user.PinCode,
-                        StateID = user.StateID,
-                        UserID = user.UserID
+                    var usr = _context.Users.Find(user.UserID);
 
-                    });
+                    if (usr != null)
+                    {
+
+                        if (string.IsNullOrEmpty(usr.EmailAddress))
+                        {
+                            usr.EmailAddress = user.Email;
+                        }
+
+                        usr.Mobile = user.Phone;
+                        usr.LastUpdated = DateTime.UtcNow;
+                        usr.ProfileComplete = true;
+                        _context.Entry(usr).State = System.Data.Entity.EntityState.Modified;
+                    }
+
+                    var userDetails = _context.UserDetails.Where(x => x.UserID == user.UserID).FirstOrDefault();
+                    if (userDetails != null)
+                    {
+                        if (string.IsNullOrEmpty(userDetails.FirstName))
+                        {
+                            userDetails.FirstName = user.FirstName;
+                            userDetails.LastName = user.LastName;
+                            _context.Entry(userDetails).State = System.Data.Entity.EntityState.Modified;
+                            _context.SaveChanges();
+
+                        }
+                    }
+
+                    var userAddress = _context.UserAddressDetails.Where(x => x.UserID == user.UserID).FirstOrDefault();
+
+                    if (userAddress != null)
+                    {
+                        if (string.IsNullOrEmpty(userAddress.AddressLine1))
+                        {
+                            userAddress.AddressLine1 = user.AddressLine1;
+                            userAddress.AddressLine2 = user.AddressLine2;
+                            userAddress.CityID = user.CityID;
+                            userAddress.StateID = user.StateID;
+                            userAddress.CountryID = user.CountryID;
+                            userAddress.Landmark = user.LandMark;
+                            userAddress.Pincode = user.PinCode;
+                            _context.Entry(userAddress).State = System.Data.Entity.EntityState.Modified;
+                            _context.SaveChanges();
+                        }
+                        else
+                        {
+                            _context.UserAddressDetails.Add(new UserAddressDetail()
+                            {
+                                AddressLine1 = user.AddressLine1,
+                                AddressLine2 = user.AddressLine2,
+                                CityID = user.CityID,
+                                CountryID = user.CountryID,
+                                Landmark = user.LandMark,
+                                Pincode = user.PinCode,
+                                StateID = user.StateID,
+                                UserID = user.UserID
+
+                            });
+                            _context.SaveChanges();
+                        }
+
+                    }
+                    else
+                    {
+                        _context.UserAddressDetails.Add(new UserAddressDetail()
+                        {
+                            AddressLine1 = user.AddressLine1,
+                            AddressLine2 = user.AddressLine2,
+                            CityID = user.CityID,
+                            CountryID = user.CountryID,
+                            Landmark = user.LandMark,
+                            Pincode = user.PinCode,
+                            StateID = user.StateID,
+                            UserID = user.UserID
+
+                        });
+                        _context.SaveChanges();
+                    }
+                }
+                else {
+                    var guestUser = new GuestUserDetail() { 
+                                    ID = Guid.NewGuid(),
+                                    AddressLine1 = user.AddressLine1,
+                                    AddressLine2 = user.AddressLine2,
+                                    CityID = user.CityID,
+                                    CountryID = user.CountryID,
+                                    EmailAddress = user.Email,
+                                    FirstName = user.FirstName,
+                                    LandMark = user.LandMark,
+                                    LastName = user.LastName,
+                                    Phone = user.Phone,
+                                    Pincode = user.PinCode,
+                                    StateID = user.StateID
+                    };
+                    _context.GuestUserDetails.Add(guestUser);
                     _context.SaveChanges();
+
+                    return GetGuestUserDetails(guestUser.ID);
+
                 }
             }
 
             return GetUser(user.UserID);
         }
 
+        public UserDetails GetGuestUserDetails(Guid GuestUserID) {
+            using (_context = new karrykartEntities())
+            {
+                var guestUser = _context.GuestUserDetails.Find(GuestUserID);
+                if (guestUser != null)
+                {
+                    var userDetail = new UserDetails()
+                    {
+                        Email = guestUser.EmailAddress,
+                        FirstName = guestUser.FirstName,
+                        LastName = guestUser.LastName,
+                        Phone = guestUser.Phone,
+                        UserID = guestUser.ID
+                    };
+
+                    userDetail.AddressList = new List<UserAddress>();
+                    userDetail.AddressList.Add(new UserAddress()
+                    {
+                        AddressLine1 = guestUser.AddressLine1,
+                        AddressLine2 = guestUser.AddressLine2,
+                        City = _context.refCities.Find(guestUser.CityID.Value).Name,
+                        CityID = guestUser.CityID.Value,
+                        State = _context.refStates.Find(guestUser.StateID.Value).Name,
+                        StateID = guestUser.StateID.Value,
+                        Country = _context.Countries.Find(guestUser.CountryID.Value).CountryName,
+                        CountryID = guestUser.CountryID.Value,
+                        LandMark = guestUser.LandMark,
+                        PinCode = guestUser.Pincode
+                    });
+
+                    return userDetail;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
         public UserDetails EditUserAddress(AddUserAddressModel user)
         {
             using (_context = new karrykartEntities())
             {
-                var usr = _context.Users.Find(user.UserID);
-
-                if (usr != null)
+                if (!user.GuestCheckout)
                 {
+                    var usr = _context.Users.Find(user.UserID);
 
-                    if (string.IsNullOrEmpty(usr.EmailAddress))
+                    if (usr != null)
                     {
-                        usr.EmailAddress = user.Email;
+
+                        if (string.IsNullOrEmpty(usr.EmailAddress))
+                        {
+                            usr.EmailAddress = user.Email;
+                        }
+
+                        usr.Mobile = user.Phone;
+                        usr.LastUpdated = DateTime.UtcNow;
+                        usr.ProfileComplete = true;
+                        _context.Entry(usr).State = System.Data.Entity.EntityState.Modified;
                     }
 
-                    usr.Mobile = user.Phone;
-                    usr.LastUpdated = DateTime.UtcNow;
-                    usr.ProfileComplete = true;
-                    _context.Entry(usr).State = System.Data.Entity.EntityState.Modified;
-                }
-
-                var userDetails = _context.UserDetails.Where(x => x.UserID == user.UserID).FirstOrDefault();
-                if (userDetails != null)
-                {
-                    if (string.IsNullOrEmpty(userDetails.FirstName))
+                    var userDetails = _context.UserDetails.Where(x => x.UserID == user.UserID).FirstOrDefault();
+                    if (userDetails != null)
                     {
-                        userDetails.FirstName = user.FirstName;
-                        userDetails.LastName = user.LastName;
-                        _context.Entry(userDetails).State = System.Data.Entity.EntityState.Modified;
-                        _context.SaveChanges();
+                        if (string.IsNullOrEmpty(userDetails.FirstName))
+                        {
+                            userDetails.FirstName = user.FirstName;
+                            userDetails.LastName = user.LastName;
+                            _context.Entry(userDetails).State = System.Data.Entity.EntityState.Modified;
+                            _context.SaveChanges();
 
+                        }
                     }
-                }
 
-                var userAddress = _context.UserAddressDetails.Where(x => x.UserID == user.UserID && x.AddressID==user.AddressID).FirstOrDefault();
+                    var userAddress = _context.UserAddressDetails.Where(x => x.UserID == user.UserID && x.AddressID == user.AddressID).FirstOrDefault();
 
-                if (userAddress != null)
-                {
-                   
+                    if (userAddress != null)
+                    {
+
                         userAddress.AddressLine1 = user.AddressLine1;
                         userAddress.AddressLine2 = user.AddressLine2;
                         userAddress.CityID = user.CityID;
@@ -402,11 +472,30 @@ namespace KarryKart.API.Helpers
                         userAddress.Pincode = user.PinCode;
                         _context.Entry(userAddress).State = System.Data.Entity.EntityState.Modified;
                         _context.SaveChanges();
-                   
+
+
+                    }
 
                 }
-               
-               
+                else {
+                    var guestUser = _context.GuestUserDetails.Find(user.UserID);
+                    if (guestUser != null) {
+                        guestUser.AddressLine1 = user.AddressLine1;
+                        guestUser.AddressLine2 = user.AddressLine2;
+                        guestUser.CityID = user.CityID;
+                        guestUser.CountryID = user.CountryID;
+                        guestUser.EmailAddress = user.Email;
+                        guestUser.FirstName = user.FirstName;
+                        guestUser.LandMark = user.LandMark;
+                        guestUser.LastName = user.LastName;
+                        guestUser.Phone = user.Phone;
+                        guestUser.Pincode = user.PinCode;
+                        guestUser.StateID = user.StateID;
+                        _context.Entry(guestUser).State = System.Data.Entity.EntityState.Modified;
+                        _context.SaveChanges();
+                        return GetGuestUserDetails(guestUser.ID);
+                    }
+                }
             }
 
             return GetUser(user.UserID);

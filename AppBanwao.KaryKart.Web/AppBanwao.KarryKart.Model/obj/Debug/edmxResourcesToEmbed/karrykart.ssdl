@@ -12,6 +12,8 @@
     <EntitySet Name="CouponValue" EntityType="KarrykartModel.Store.CouponValue" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Currency" EntityType="KarrykartModel.Store.Currency" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="DeliverySlot" EntityType="KarrykartModel.Store.DeliverySlot" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GuestUserDetail" EntityType="KarrykartModel.Store.GuestUserDetail" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ImportantValues" EntityType="KarrykartModel.Store.ImportantValues" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Logs" EntityType="KarrykartModel.Store.Logs" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Offers" EntityType="KarrykartModel.Store.Offers" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Order" EntityType="KarrykartModel.Store.Order" store:Type="Tables" Schema="dbo" />
@@ -228,6 +230,32 @@
     <Property Name="DeliverySlotID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="Slot" Type="varchar" MaxLength="100" />
   </EntityType>
+  <EntityType Name="GuestUserDetail">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="FirstName" Type="varchar" MaxLength="50" />
+    <Property Name="LastName" Type="varchar" MaxLength="50" />
+    <Property Name="Phone" Type="varchar" MaxLength="20" />
+    <Property Name="EmailAddress" Type="varchar" MaxLength="255" />
+    <Property Name="AddressLine1" Type="varchar" MaxLength="250" />
+    <Property Name="AddressLine2" Type="varchar" MaxLength="250" />
+    <Property Name="LandMark" Type="varchar" MaxLength="100" />
+    <Property Name="CityID" Type="int" />
+    <Property Name="StateID" Type="int" />
+    <Property Name="CountryID" Type="int" />
+    <Property Name="Pincode" Type="varchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="ImportantValues">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Description" Type="varchar" MaxLength="50" />
+    <Property Name="Value" Type="int" />
+    <Property Name="Type" Type="varchar" MaxLength="50" />
+  </EntityType>
   <EntityType Name="Logs">
     <Key>
       <PropertyRef Name="LogId" />
@@ -259,6 +287,7 @@
     <Property Name="CartID" Type="uniqueidentifier" />
     <Property Name="UserID" Type="uniqueidentifier" />
     <Property Name="PaymentID" Type="uniqueidentifier" />
+    <Property Name="Status" Type="int" />
   </EntityType>
   <EntityType Name="OrderProduct">
     <Key>

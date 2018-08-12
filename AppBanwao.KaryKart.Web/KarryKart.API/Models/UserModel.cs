@@ -116,5 +116,6 @@ namespace KarryKart.API.Models
         public int CountryID { get; set; }
         public string LandMark { get; set; }
         public string PinCode { get; set; }
+        public bool GuestCheckout { get; set; }
     }
 }
