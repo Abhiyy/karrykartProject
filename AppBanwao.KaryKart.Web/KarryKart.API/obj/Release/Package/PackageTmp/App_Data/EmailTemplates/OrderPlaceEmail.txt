@@ -1,20 +1,22 @@
 ﻿<html>
-<body style="color:grey; font-size:15px;">
+<body style="font-size:15px;">
 <font face="Helvetica, Arial, sans-serif">
-
 <div style="position:absolute; text-align:center;height:100px; width:600px; padding:30px;">
 <img src={0} />
 <p>Food-Groceries-Cakes</p>
 </div>
 
-<div style="background-color: #F5F6CE;width:600px; height:200px; padding:30px; margin-top:5px;">
+<div style="background-color: #fafafa; position:relative;width:600px; min-height:400px; padding:30px; margin-top:5px;">
 
 <p>Dear {1},</p>
 
-<p>Your Order has been placed successfully. We will contact you shortly with your order details. This is Cash on delivery order.</p>
+
+
+{2}
+
 
 <br/>
-<p>Please contact us on {2}, in case of any issue. Also do keep the Order ID for your reference.</p>
+<p>Please contact us on {3}, in case of any issue. Also do keep the Order ID for your reference.</p>
 <p>Thank you</p>
 <p>KarryKart Team</p>
 </div>

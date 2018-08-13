@@ -74,7 +74,3 @@ CREATE TABLE [dbo].[GuestUserDetail]
 )
 
 
-
-select * from [dbo].[GuestUserDetail]
-
-delete from GuestUserDetail
