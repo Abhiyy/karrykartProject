@@ -288,6 +288,10 @@
     <Property Name="UserID" Type="uniqueidentifier" />
     <Property Name="PaymentID" Type="uniqueidentifier" />
     <Property Name="Status" Type="int" />
+    <Property Name="PlaceOn" Type="datetime" />
+    <Property Name="DeliveredOn" Type="datetime" />
+    <Property Name="GuestCheckout" Type="bit" />
+    <Property Name="DeliveryAddressID" Type="int" />
   </EntityType>
   <EntityType Name="OrderProduct">
     <Key>

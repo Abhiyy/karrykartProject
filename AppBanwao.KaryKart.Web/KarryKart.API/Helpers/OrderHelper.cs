@@ -16,8 +16,10 @@ namespace KarryKart.API.Helpers
         SmsHelper _smsHelper = null;
         CartHelper _cartHelper = null;
         LoginHelper _loginHelper = null;
+        UserHelper _userHelper = null;
+        ProductHelper _productHelper = null;
         public enum PaymentMethod { 
-        CashOnDelivery
+        CashOnDelivery=1
         }
         public OrderModel CreateOrder(OrderInputModel OrderToCheckout)
         {
@@ -31,7 +33,14 @@ namespace KarryKart.API.Helpers
                     var payment = new Payment() { ID = Guid.NewGuid(), Amount = Convert.ToDecimal(cartDetails.GrandTotal), Type = OrderToCheckout.PaymentType, IsSuccessful = OrderToCheckout.GuestCheckout ? false : true };
                     _context.Payments.Add(payment);
                     _context.SaveChanges();
-                    var order = new Order() { ID=Guid.NewGuid(),CartID=cart.ID,UserID=cart.CartUserID,PaymentID=payment.ID,Status=1};
+                    var order = new Order() { ID=Guid.NewGuid(),
+                                              CartID=cart.ID,
+                                              UserID=OrderToCheckout.UserID,
+                                              PaymentID=payment.ID,
+                                              Status=1,
+                                              PlaceOn=DateTime.Now,
+                                              GuestCheckout=OrderToCheckout.GuestCheckout,
+                                              DeliveryAddressID=OrderToCheckout.GuestCheckout?0:OrderToCheckout.AddressID};
                     _context.Orders.Add(order);
                     _context.SaveChanges();
 
@@ -68,7 +77,67 @@ namespace KarryKart.API.Helpers
 
            
         }
-        
+
+        public List<OrderDetailModel> GetUserOrders(Guid ID)
+        {
+            List<OrderDetailModel> lstOrders = null;
+            using (_context = new karrykartEntities())
+            {
+                var lstOrder = _context.Orders.Where(o => o.UserID == ID).OrderByDescending(o=>o.PlaceOn).ToList();
+                if (lstOrder.Count > 0) { 
+                    lstOrders = new List<OrderDetailModel>();
+                    foreach (var order in lstOrder) {
+                        lstOrders.Add(GetOrder(order.ID));
+                    }
+                }
+            }
+            return lstOrders;
+        }
+
+        public OrderDetailModel GetOrder(Guid OrderID)
+        {
+            OrderDetailModel order = null;
+            using (_context = new karrykartEntities()) {
+
+                var oDetail = _context.Orders.Find(OrderID);
+
+                if (oDetail != null)
+                {
+                    order = new OrderDetailModel(); 
+                    order.OrderID = oDetail.ID;
+                    order.OrderDeliveredOn = oDetail.DeliveredOn.HasValue ? oDetail.DeliveredOn.Value.ToString("dd/MM/yyyy hh:mm:ss") : string.Empty;
+                    order.OrderPlacedOn = oDetail.PlaceOn.Value;
+                    order.OrderPlacedDateTime = oDetail.PlaceOn.Value.ToString("dd-MMM-yyyy hh:mm:ss tt");
+                    order.OrderStatusID = oDetail.Status.Value;
+                    order.OrderStatus = _context.ImportantValues.Where(i => i.Type == "OrderStatus" && i.Value == order.OrderStatusID).FirstOrDefault().Description;
+                    order.PaymentID = oDetail.PaymentID.Value;
+                    order.PaymentType = (oDetail.Payment.Type.Value==(int)PaymentMethod.CashOnDelivery)?"Cash on delivery":string.Empty;
+                    order.PaymentTypeID = oDetail.Payment.Type.Value;
+                    order.isPaymentSuccessful = oDetail.Payment.IsSuccessful.Value;
+                    order.TotalAmount = oDetail.Payment.Amount.Value;
+                    if (oDetail.GuestCheckout.Value)
+                        order.User = new LoginHelper().GetGuestUserDetails(oDetail.UserID.Value);
+                    else
+                        order.User = new LoginHelper().GetUser(oDetail.UserID.Value);
+
+                    order.GuestCheckout = oDetail.GuestCheckout.Value;
+                    order.DeliveryAddress = order.User.AddressList.Where(x => x.AddressID == oDetail.DeliveryAddressID).FirstOrDefault();
+                    _productHelper = new ProductHelper();
+
+                    order.OrderProducts = new List<KeyValuePair<ProductModel, int>>();
+                    
+                    foreach (var p in oDetail.OrderProducts)
+                    {
+                        order.OrderProducts.Add(new KeyValuePair<ProductModel, int>(_productHelper.GetProductDetail(p.ProductID.Value),p.Quantity.Value));
+                    }
+                    
+                    
+                }
+
+            }
+            return order;
+        }
+
         private string BuildOrderHtml(CartDetailsModel cartDetails, Order order, Cart cart, UserDetails address, string OrderStatus)
         {
             StringBuilder orderHtml = new StringBuilder();

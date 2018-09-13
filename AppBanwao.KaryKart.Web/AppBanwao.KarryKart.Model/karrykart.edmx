@@ -293,6 +293,10 @@
           <Property Name="UserID" Type="uniqueidentifier" />
           <Property Name="PaymentID" Type="uniqueidentifier" />
           <Property Name="Status" Type="int" />
+          <Property Name="PlaceOn" Type="datetime" />
+          <Property Name="DeliveredOn" Type="datetime" />
+          <Property Name="GuestCheckout" Type="bit" />
+          <Property Name="DeliveryAddressID" Type="int" />
         </EntityType>
         <EntityType Name="OrderProduct">
           <Key>
@@ -1495,6 +1499,10 @@
           <Property Type="Guid" Name="PaymentID" />
           <NavigationProperty Name="Payment" Relationship="KarrykartModel.FK_Order_Payment" FromRole="Order" ToRole="Payment" />
           <Property Type="Int32" Name="Status" />
+          <Property Type="DateTime" Name="PlaceOn" Precision="3" />
+          <Property Type="DateTime" Name="DeliveredOn" Precision="3" />
+          <Property Type="Boolean" Name="GuestCheckout" />
+          <Property Type="Int32" Name="DeliveryAddressID" />
         </EntityType>
         <EntityType Name="OrderProduct">
           <Key>
@@ -1977,6 +1985,10 @@
           <EntitySetMapping Name="Orders">
             <EntityTypeMapping TypeName="KarrykartModel.Order">
               <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="DeliveryAddressID" ColumnName="DeliveryAddressID" />
+                <ScalarProperty Name="GuestCheckout" ColumnName="GuestCheckout" />
+                <ScalarProperty Name="DeliveredOn" ColumnName="DeliveredOn" />
+                <ScalarProperty Name="PlaceOn" ColumnName="PlaceOn" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="PaymentID" ColumnName="PaymentID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />

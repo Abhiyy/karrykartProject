@@ -24,6 +24,10 @@ namespace AppBanwao.KarryKart.Model
         public Nullable<System.Guid> UserID { get; set; }
         public Nullable<System.Guid> PaymentID { get; set; }
         public Nullable<int> Status { get; set; }
+        public Nullable<System.DateTime> PlaceOn { get; set; }
+        public Nullable<System.DateTime> DeliveredOn { get; set; }
+        public Nullable<bool> GuestCheckout { get; set; }
+        public Nullable<int> DeliveryAddressID { get; set; }
     
         public virtual ICollection<OrderProduct> OrderProducts { get; set; }
         public virtual Payment Payment { get; set; }

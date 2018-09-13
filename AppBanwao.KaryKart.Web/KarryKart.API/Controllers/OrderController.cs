@@ -19,9 +19,24 @@ namespace KarryKart.API.Controllers
         }
 
         // GET api/<controller>/5
-        public string Get(int id)
+        public List<OrderDetailModel> Get(string OrderID, string UserID)
         {
-            return "value";
+            try
+            {
+                _orderHelper = new OrderHelper();
+                if (!string.IsNullOrEmpty(OrderID))
+                {
+
+                }
+                else {
+                    return _orderHelper.GetUserOrders( Guid.Parse(UserID));
+                }
+            }
+            catch (Exception ex) {
+                return null;
+            }
+
+            return null;
         }
 
         // POST api/<controller>

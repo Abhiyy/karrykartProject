@@ -313,6 +313,10 @@
     <EntitySetMapping Name="Orders">
       <EntityTypeMapping TypeName="KarrykartModel.Order">
         <MappingFragment StoreEntitySet="Order">
+          <ScalarProperty Name="DeliveryAddressID" ColumnName="DeliveryAddressID" />
+          <ScalarProperty Name="GuestCheckout" ColumnName="GuestCheckout" />
+          <ScalarProperty Name="DeliveredOn" ColumnName="DeliveredOn" />
+          <ScalarProperty Name="PlaceOn" ColumnName="PlaceOn" />
           <ScalarProperty Name="Status" ColumnName="Status" />
           <ScalarProperty Name="PaymentID" ColumnName="PaymentID" />
           <ScalarProperty Name="UserID" ColumnName="UserID" />

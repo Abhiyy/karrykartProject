@@ -685,6 +685,10 @@
     <Property Type="Guid" Name="PaymentID" />
     <NavigationProperty Name="Payment" Relationship="KarrykartModel.FK_Order_Payment" FromRole="Order" ToRole="Payment" />
     <Property Type="Int32" Name="Status" />
+    <Property Type="DateTime" Name="PlaceOn" Precision="3" />
+    <Property Type="DateTime" Name="DeliveredOn" Precision="3" />
+    <Property Type="Boolean" Name="GuestCheckout" />
+    <Property Type="Int32" Name="DeliveryAddressID" />
   </EntityType>
   <EntityType Name="OrderProduct">
     <Key>
