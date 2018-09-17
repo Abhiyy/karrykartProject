@@ -14,7 +14,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/25/2018 01:54:37</publishTime>
     </File>
     <File Include="App_Data/EmailTemplates/OrderPlaceEmail.txt">
-      <publishTime>08/12/2018 11:54:49</publishTime>
+      <publishTime>08/13/2018 14:37:08</publishTime>
     </File>
     <File Include="App_Data/EmailTemplates/OtpEmail.txt">
       <publishTime>07/21/2018 23:56:34</publishTime>
@@ -29,10 +29,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/02/2016 22:03:29</publishTime>
     </File>
     <File Include="bin/AppBanwao.KarryKart.Model.dll">
-      <publishTime>08/13/2018 08:31:06</publishTime>
+      <publishTime>09/13/2018 07:55:35</publishTime>
     </File>
     <File Include="bin/AppBanwao.KaryKart.Web.dll">
-      <publishTime>08/13/2018 08:31:09</publishTime>
+      <publishTime>09/13/2018 07:55:38</publishTime>
     </File>
     <File Include="bin/DA.EmailEngine.dll">
       <publishTime>01/19/2017 08:52:06</publishTime>
@@ -47,7 +47,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/02/2016 22:03:27</publishTime>
     </File>
     <File Include="bin/KarryKart.API.dll">
-      <publishTime>08/13/2018 08:31:10</publishTime>
+      <publishTime>09/13/2018 07:55:39</publishTime>
     </File>
     <File Include="bin/Microsoft.Web.Infrastructure.dll">
       <publishTime>02/02/2016 22:03:29</publishTime>
@@ -167,7 +167,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/10/2017 09:31:53</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>08/13/2018 08:31:12</publishTime>
+      <publishTime>09/13/2018 09:20:08</publishTime>
     </File>
   </ItemGroup>
 </Project>
