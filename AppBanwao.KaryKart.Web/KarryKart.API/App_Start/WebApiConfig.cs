@@ -13,8 +13,12 @@ namespace KarryKart.API
             var corsAttr = new EnableCorsAttribute("http://localhost:15557", "*", "*");
             config.EnableCors(corsAttr);
             config.EnableCors();
+
             var corsAttr1 = new EnableCorsAttribute("http://localhost:8100", "*", "*");
             config.EnableCors(corsAttr1);
+
+            //var corsAttr2 = new EnableCorsAttribute("http://hg.karrykart.com", "*", "*");
+            //config.EnableCors(corsAttr2);
             config.EnableCors();
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
