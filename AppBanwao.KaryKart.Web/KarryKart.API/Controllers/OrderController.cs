@@ -12,21 +12,21 @@ namespace KarryKart.API.Controllers
     public class OrderController : ApiController
     {
         OrderHelper _orderHelper = null;
-        // GET api/<controller>
+         //GET api/<controller>
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
         }
 
         // GET api/<controller>/5
-        public List<OrderDetailModel> Get(string OrderID, string UserID)
+        public List<OrderDetailModel> Get(string OrderID, string UserID, string CartID)
         {
             try
             {
                 _orderHelper = new OrderHelper();
                 if (!string.IsNullOrEmpty(OrderID))
                 {
-
+                    return _orderHelper.GetOrderByCartID(Guid.Parse(UserID), Guid.Parse(CartID));
                 }
                 else {
                     return _orderHelper.GetUserOrders( Guid.Parse(UserID));

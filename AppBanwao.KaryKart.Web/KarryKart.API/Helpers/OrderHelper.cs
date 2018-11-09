@@ -3,6 +3,7 @@ using AppBanwao.KaryKart.Web.Helpers;
 using KarryKart.API.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -18,6 +19,7 @@ namespace KarryKart.API.Helpers
         LoginHelper _loginHelper = null;
         UserHelper _userHelper = null;
         ProductHelper _productHelper = null;
+        string _adminEmail = ConfigurationManager.AppSettings["AdminEmail"].ToString();
         public enum PaymentMethod { 
         CashOnDelivery=1
         }
@@ -30,7 +32,7 @@ namespace KarryKart.API.Helpers
                 {
                     _cartHelper = new CartHelper();
                     var cartDetails = _cartHelper.GetCart(OrderToCheckout.CartID);
-                    var payment = new Payment() { ID = Guid.NewGuid(), Amount = Convert.ToDecimal(cartDetails.GrandTotal), Type = OrderToCheckout.PaymentType, IsSuccessful = OrderToCheckout.GuestCheckout ? false : true };
+                    var payment = new Payment() { ID = OrderToCheckout.GuestCheckout?Guid.NewGuid():OrderToCheckout.TransactionID==Guid.Empty?Guid.NewGuid():OrderToCheckout.TransactionID, Amount = Convert.ToDecimal(cartDetails.GrandTotal), Type = OrderToCheckout.PaymentType, IsSuccessful = OrderToCheckout.GuestCheckout ? false : OrderToCheckout.TransactionStatus=="success"? true:false };
                     _context.Payments.Add(payment);
                     _context.SaveChanges();
                     var order = new Order() { ID=Guid.NewGuid(),
@@ -65,6 +67,7 @@ namespace KarryKart.API.Helpers
                     }
                     var orderHtml = BuildOrderHtml(cartDetails, order, cart, userDetails,GetOrderStatus(order,_context));
                     _emailHelper.SendOrderPlacedEmail(userDetails.FirstName+" " + userDetails.LastName, userDetails.Email, orderHtml);
+                    _emailHelper.SendOrderPlacedEmail("Admin", _adminEmail, orderHtml);
                    // string smsMsg = "Hi " + user.UserDetails.FirstOrDefault().FirstName + user.UserDetails.FirstOrDefault().LastName + ", thank you for placing order with us. Your order will be confirmed shortly.";
            //         _smsHelper = new SmsHelper();
            //         _smsHelper.SendOrderConfirmationToUser(new SmsModel() { Message =smsMsg , Number = contact });
@@ -76,6 +79,22 @@ namespace KarryKart.API.Helpers
             return null;
 
            
+        }
+
+        public  List<OrderDetailModel>  GetOrderByCartID(Guid UserID, Guid CartID)
+        { 
+            using(_context = new karrykartEntities())
+            {
+                var order=_context.Orders.Where(x=>x.CartID==CartID && x.UserID==UserID).FirstOrDefault();
+                if (order != null)
+                {
+                    List<OrderDetailModel> lstOrders = new List<OrderDetailModel>();
+                    lstOrders.Add(GetOrder(order.ID));
+                    return lstOrders;
+                }
+            }
+            return null;
+        
         }
 
         public List<OrderDetailModel> GetUserOrders(Guid ID)
@@ -111,7 +130,7 @@ namespace KarryKart.API.Helpers
                     order.OrderStatusID = oDetail.Status.Value;
                     order.OrderStatus = _context.ImportantValues.Where(i => i.Type == "OrderStatus" && i.Value == order.OrderStatusID).FirstOrDefault().Description;
                     order.PaymentID = oDetail.PaymentID.Value;
-                    order.PaymentType = (oDetail.Payment.Type.Value==(int)PaymentMethod.CashOnDelivery)?"Cash on delivery":string.Empty;
+                    order.PaymentType = (oDetail.Payment.Type.Value==(int)PaymentMethod.CashOnDelivery)?"Cash on delivery":"Online Payment";
                     order.PaymentTypeID = oDetail.Payment.Type.Value;
                     order.isPaymentSuccessful = oDetail.Payment.IsSuccessful.Value;
                     order.TotalAmount = oDetail.Payment.Amount.Value;

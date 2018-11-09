@@ -147,6 +147,9 @@
     <Compile Include="Controllers\LogoutController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
+    <Compile Include="Controllers\PanelController.cs" />
+    <Compile Include="Controllers\PaymentController.cs" />
+    <Compile Include="Controllers\PaymentRedirectController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\SignUpController.cs" />
@@ -158,14 +161,18 @@
     </Compile>
     <Compile Include="Helpers\CartHelper.cs" />
     <Compile Include="Helpers\APIEmailHelper.cs" />
+    <Compile Include="Helpers\CommonHelper.cs" />
     <Compile Include="Helpers\LoginHelper.cs" />
     <Compile Include="Helpers\MenuHelper.cs" />
     <Compile Include="Helpers\OrderHelper.cs" />
+    <Compile Include="Helpers\PaymentHelper.cs" />
     <Compile Include="Helpers\ProductHelper.cs" />
     <Compile Include="Helpers\SmsHelper.cs" />
     <Compile Include="Models\CartModel.cs" />
     <Compile Include="Models\MenuModel.cs" />
     <Compile Include="Models\OrderModel.cs" />
+    <Compile Include="Models\PanelModel.cs" />
+    <Compile Include="Models\PaymentModel.cs" />
     <Compile Include="Models\ProductModel.cs" />
     <Compile Include="Models\SmsModel.cs" />
     <Compile Include="Models\UserModel.cs" />
@@ -233,6 +240,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\PublishProfiles\kkapipub.pubxml" />
+    <Content Include="Views\PaymentRedirect\Success.cshtml" />
+    <Content Include="Views\PaymentRedirect\Failure.cshtml" />
+    <Content Include="Views\PaymentRedirect\Payment.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

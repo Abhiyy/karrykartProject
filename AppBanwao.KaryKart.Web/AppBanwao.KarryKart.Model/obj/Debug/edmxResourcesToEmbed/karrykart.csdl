@@ -139,6 +139,15 @@
     </AssociationSet>
     <EntitySet Name="GuestUserDetails" EntityType="KarrykartModel.GuestUserDetail" />
     <EntitySet Name="ImportantValues" EntityType="KarrykartModel.ImportantValue" />
+    <EntitySet Name="PaymentTransactions" EntityType="KarrykartModel.PaymentTransaction" />
+    <EntitySet Name="Panels" EntityType="KarrykartModel.Panel" />
+    <EntitySet Name="PanelItems" EntityType="KarrykartModel.PanelItem" />
+    <AssociationSet Name="FK__PanelItem__Link__0F624AF8" Association="KarrykartModel.FK__PanelItem__Link__0F624AF8">
+      <End Role="Panel" EntitySet="Panels" />
+      <End Role="PanelItem" EntitySet="PanelItems" />
+    </AssociationSet>
+    <FunctionImport Name="UpdatePageHit" />
+    <FunctionImport Name="GetDashBoardCards" ReturnType="Collection(KarrykartModel.GetDashBoardCards_Result)" />
   </EntityContainer>
   <EntityType Name="Brand">
     <Key>
@@ -853,4 +862,61 @@
     <Property Type="Int32" Name="Value" />
     <Property Type="String" Name="Type" MaxLength="50" FixedLength="false" Unicode="false" />
   </EntityType>
+  <EntityType Name="PaymentTransaction">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Guid" Name="TxnID" />
+    <Property Type="Guid" Name="CartID" />
+    <Property Type="Guid" Name="UserID" />
+    <Property Type="String" Name="TransactionStatus" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="Boolean" Name="GuestCheckout" />
+    <Property Type="Int32" Name="AddressID" />
+  </EntityType>
+  <EntityType Name="Panel">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="Name" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="Title" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="Type" />
+    <Property Type="String" Name="For" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="ItemOrder" />
+    <Property Type="Boolean" Name="Active" />
+    <Property Type="String" Name="html" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="PanelItems" Relationship="KarrykartModel.FK__PanelItem__Link__0F624AF8" FromRole="Panel" ToRole="PanelItem" />
+  </EntityType>
+  <EntityType Name="PanelItem">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int32" Name="PanelID" />
+    <Property Type="String" Name="Title" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Type="Int32" Name="ItemType" />
+    <Property Type="Boolean" Name="Active" />
+    <Property Type="String" Name="html" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="ImageLink" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="ItemID" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="Link" MaxLength="255" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Panel" Relationship="KarrykartModel.FK__PanelItem__Link__0F624AF8" FromRole="PanelItem" ToRole="Panel" />
+  </EntityType>
+  <Association Name="FK__PanelItem__Link__0F624AF8">
+    <End Type="KarrykartModel.Panel" Role="Panel" Multiplicity="0..1" />
+    <End Type="KarrykartModel.PanelItem" Role="PanelItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Panel">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PanelItem">
+        <PropertyRef Name="PanelID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <ComplexType Name="GetDashBoardCards_Result">
+    <Property Type="String" Name="Name" Nullable="true" MaxLength="30" />
+    <Property Type="Int32" Name="CardCount" Nullable="true" />
+  </ComplexType>
 </Schema>

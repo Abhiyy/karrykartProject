@@ -19,7 +19,10 @@
     <EntitySet Name="Order" EntityType="KarrykartModel.Store.Order" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="OrderProduct" EntityType="KarrykartModel.Store.OrderProduct" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="OTPHolder" EntityType="KarrykartModel.Store.OTPHolder" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Panel" EntityType="KarrykartModel.Store.Panel" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PanelItem" EntityType="KarrykartModel.Store.PanelItem" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Payment" EntityType="KarrykartModel.Store.Payment" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PaymentTransaction" EntityType="KarrykartModel.Store.PaymentTransaction" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Product" EntityType="KarrykartModel.Store.Product" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProductFeature" EntityType="KarrykartModel.Store.ProductFeature" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProductImage" EntityType="KarrykartModel.Store.ProductImage" store:Type="Tables" Schema="dbo" />
@@ -39,6 +42,10 @@
     <EntitySet Name="UserDetail" EntityType="KarrykartModel.Store.UserDetail" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="UserLogin" EntityType="KarrykartModel.Store.UserLogin" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Users" EntityType="KarrykartModel.Store.Users" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK__PanelItem__Link__0F624AF8" Association="KarrykartModel.Store.FK__PanelItem__Link__0F624AF8">
+      <End Role="Panel" EntitySet="Panel" />
+      <End Role="PanelItem" EntitySet="PanelItem" />
+    </AssociationSet>
     <AssociationSet Name="FK__Product__BrandID__3A81B327" Association="KarrykartModel.Store.FK__Product__BrandID__3A81B327">
       <End Role="Brand" EntitySet="Brand" />
       <End Role="Product" EntitySet="Product" />
@@ -310,6 +317,33 @@
     <Property Name="OTPValue" Type="varchar" MaxLength="50" />
     <Property Name="OTPAssignedTo" Type="varchar" MaxLength="255" />
   </EntityType>
+  <EntityType Name="Panel">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="varchar" MaxLength="50" />
+    <Property Name="Title" Type="varchar" MaxLength="100" />
+    <Property Name="Type" Type="int" />
+    <Property Name="For" Type="varchar" MaxLength="20" />
+    <Property Name="ItemOrder" Type="int" />
+    <Property Name="Active" Type="bit" />
+    <Property Name="html" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="PanelItem">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="PanelID" Type="int" />
+    <Property Name="Title" Type="varchar" MaxLength="100" />
+    <Property Name="ItemType" Type="int" />
+    <Property Name="Active" Type="bit" />
+    <Property Name="html" Type="nvarchar(max)" />
+    <Property Name="ImageLink" Type="varchar" MaxLength="255" />
+    <Property Name="ItemID" Type="varchar" MaxLength="255" />
+    <Property Name="Link" Type="varchar" MaxLength="255" />
+  </EntityType>
   <EntityType Name="Payment">
     <Key>
       <PropertyRef Name="ID" />
@@ -319,6 +353,18 @@
     <Property Name="Amount" Type="decimal" Precision="9" Scale="2" />
     <Property Name="Type" Type="int" />
     <Property Name="IsSuccessful" Type="bit" />
+  </EntityType>
+  <EntityType Name="PaymentTransaction">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="TxnID" Type="uniqueidentifier" />
+    <Property Name="CartID" Type="uniqueidentifier" />
+    <Property Name="UserID" Type="uniqueidentifier" />
+    <Property Name="TransactionStatus" Type="varchar" MaxLength="50" />
+    <Property Name="GuestCheckout" Type="bit" />
+    <Property Name="AddressID" Type="int" />
   </EntityType>
   <EntityType Name="Product">
     <Key>
@@ -501,6 +547,18 @@
     <Property Name="RoleID" Type="int" />
     <Property Name="ProfileComplete" Type="bit" />
   </EntityType>
+  <Association Name="FK__PanelItem__Link__0F624AF8">
+    <End Role="Panel" Type="KarrykartModel.Store.Panel" Multiplicity="0..1" />
+    <End Role="PanelItem" Type="KarrykartModel.Store.PanelItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Panel">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PanelItem">
+        <PropertyRef Name="PanelID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK__Product__BrandID__3A81B327">
     <End Role="Brand" Type="KarrykartModel.Store.Brand" Multiplicity="0..1" />
     <End Role="Product" Type="KarrykartModel.Store.Product" Multiplicity="*" />
@@ -805,4 +863,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Function Name="GetDashBoardCards" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="UpdatePageHit" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
 </Schema>

@@ -400,5 +400,56 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="PaymentTransactions">
+      <EntityTypeMapping TypeName="KarrykartModel.PaymentTransaction">
+        <MappingFragment StoreEntitySet="PaymentTransaction">
+          <ScalarProperty Name="AddressID" ColumnName="AddressID" />
+          <ScalarProperty Name="GuestCheckout" ColumnName="GuestCheckout" />
+          <ScalarProperty Name="TransactionStatus" ColumnName="TransactionStatus" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="CartID" ColumnName="CartID" />
+          <ScalarProperty Name="TxnID" ColumnName="TxnID" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Panels">
+      <EntityTypeMapping TypeName="KarrykartModel.Panel">
+        <MappingFragment StoreEntitySet="Panel">
+          <ScalarProperty Name="html" ColumnName="html" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="ItemOrder" ColumnName="ItemOrder" />
+          <ScalarProperty Name="For" ColumnName="For" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PanelItems">
+      <EntityTypeMapping TypeName="KarrykartModel.PanelItem">
+        <MappingFragment StoreEntitySet="PanelItem">
+          <ScalarProperty Name="Link" ColumnName="Link" />
+          <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+          <ScalarProperty Name="ImageLink" ColumnName="ImageLink" />
+          <ScalarProperty Name="html" ColumnName="html" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="ItemType" ColumnName="ItemType" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="PanelID" ColumnName="PanelID" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="UpdatePageHit" FunctionName="KarrykartModel.Store.UpdatePageHit" />
+    <FunctionImportMapping FunctionImportName="GetDashBoardCards" FunctionName="KarrykartModel.Store.GetDashBoardCards">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="KarrykartModel.GetDashBoardCards_Result">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="CardCount" ColumnName="CardCount" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>

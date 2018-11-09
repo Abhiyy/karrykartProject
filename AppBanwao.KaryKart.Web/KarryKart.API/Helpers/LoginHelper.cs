@@ -61,11 +61,13 @@ namespace KarryKart.API.Helpers
         public UserInformation CheckLogin(UserInformation user)
         {
             using (_context = new karrykartEntities()) {
+                
                 var userLogin = _context.UserLogins.Where(ul => ul.UserID == user.UserID && ul.Token == user.Token).FirstOrDefault();
                 if (userLogin != null)
                 {
                     if ((user.ExpiryDateTime - userLogin.TokenExpiry.Value).Days <= 15)
                     {
+                    
                         userLogin.TokenExpiry = DateTime.Now.AddDays(15);
                         _context.Entry(userLogin).State = System.Data.Entity.EntityState.Modified;
                         _context.SaveChanges();
@@ -78,6 +80,8 @@ namespace KarryKart.API.Helpers
             }
             return user;
         }
+
+        
 
         public bool Logout(Guid UserID, Guid token)
         {

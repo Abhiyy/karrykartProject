@@ -93,6 +93,53 @@ namespace KarryKart.API.Helpers
             return lstProducts;
         }
 
+
+        public List<ProductModel> GetAllProductsByCategory(int CategoryID,bool ActiveOnly = true)
+        {
+            _context = new karrykartEntities();
+            List<Guid> productIDs = null;
+            List<ProductModel> lstProducts = null;
+            if (ActiveOnly)
+                productIDs = _context.Products.Where(x => x.CategoryID.Value==CategoryID && x.Active == ActiveOnly).Select(x => x.ProductID).ToList();
+            else
+                productIDs = _context.Products.Where(x => x.CategoryID.Value == CategoryID).Select(x => x.ProductID).ToList();
+
+            if (productIDs.Count > 0)
+            {
+                lstProducts = new List<ProductModel>();
+                foreach (var id in productIDs)
+                {
+                    lstProducts.Add(GetProductDetail(id));
+                }
+            }
+            productIDs = null;
+
+            return lstProducts;
+        }
+
+        public List<ProductModel> GetAllProductsBySubCategory(int SubCategoryID, bool ActiveOnly = true)
+        {
+            _context = new karrykartEntities();
+            List<Guid> productIDs = null;
+            List<ProductModel> lstProducts = null;
+            if (ActiveOnly)
+                productIDs = _context.Products.Where(x => x.SubCategoryID.Value == SubCategoryID && x.Active == ActiveOnly).Select(x => x.ProductID).ToList();
+            else
+                productIDs = _context.Products.Where(x => x.SubCategoryID.Value == SubCategoryID).Select(x => x.ProductID).ToList();
+
+            if (productIDs.Count > 0)
+            {
+                lstProducts = new List<ProductModel>();
+                foreach (var id in productIDs)
+                {
+                    lstProducts.Add(GetProductDetail(id));
+                }
+            }
+            productIDs = null;
+
+            return lstProducts;
+        }
+
         private List<ProductSize> GetProductSizeMapping(karrykartEntities context, Product product)
         {
             List<ProductSize> lstProductSizeMapping = new List<ProductSize>(); ProductSize objSizeMapping = null;

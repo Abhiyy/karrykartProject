@@ -85,6 +85,9 @@
     <Compile Include="DeliverySlot.cs">
       <DependentUpon>karrykart.tt</DependentUpon>
     </Compile>
+    <Compile Include="GetDashBoardCards_Result.cs">
+      <DependentUpon>karrykart.tt</DependentUpon>
+    </Compile>
     <Compile Include="GuestUserDetail.cs">
       <DependentUpon>karrykart.tt</DependentUpon>
     </Compile>
@@ -122,7 +125,16 @@
     <Compile Include="OTPHolder.cs">
       <DependentUpon>karrykart.tt</DependentUpon>
     </Compile>
+    <Compile Include="Panel.cs">
+      <DependentUpon>karrykart.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PanelItem.cs">
+      <DependentUpon>karrykart.tt</DependentUpon>
+    </Compile>
     <Compile Include="Payment.cs">
+      <DependentUpon>karrykart.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PaymentTransaction.cs">
       <DependentUpon>karrykart.tt</DependentUpon>
     </Compile>
     <Compile Include="Product.cs">

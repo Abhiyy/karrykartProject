@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Cors;
@@ -10,12 +11,20 @@ namespace KarryKart.API
     {
         public static void Register(HttpConfiguration config)
         {
-            var corsAttr = new EnableCorsAttribute("http://localhost:15557", "*", "*");
-            config.EnableCors(corsAttr);
-            config.EnableCors();
+            //var corsAttr = new EnableCorsAttribute("http://localhost:15557", "*", "*");
+            //config.EnableCors(corsAttr);
+            //config.EnableCors();
 
-            var corsAttr1 = new EnableCorsAttribute("http://localhost:8100", "*", "*");
+            string corsSites = ConfigurationManager.AppSettings["CorsSite"].ToString();
+
+            var corsAttr1 = new EnableCorsAttribute(corsSites, "*", "*");
             config.EnableCors(corsAttr1);
+
+            //var corsAttr1 = new EnableCorsAttribute("http://localhost:8100", "*", "*");
+            //config.EnableCors(corsAttr1);
+
+            //var corsAttr1 = new EnableCorsAttribute("http://localhost:8003", "*", "*");
+            //config.EnableCors(corsAttr1);
 
             //var corsAttr2 = new EnableCorsAttribute("http://hg.karrykart.com", "*", "*");
             //config.EnableCors(corsAttr2);

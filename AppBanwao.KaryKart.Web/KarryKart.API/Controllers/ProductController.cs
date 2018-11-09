@@ -21,7 +21,13 @@ namespace KarryKart.API.Controllers
             try
             {
                 _productHelper = new ProductHelper();
-                return _productHelper.GetAllProducts(ActiveOnly);
+                if (CategoryID != -1)
+                    return _productHelper.GetAllProductsByCategory(CategoryID);
+                else if(SubCategories!=-1)
+                    return _productHelper.GetAllProductsBySubCategory(SubCategories);
+                else
+                    return _productHelper.GetAllProducts(ActiveOnly);
+
             }
             catch (Exception ex)
             {

@@ -12,6 +12,9 @@ namespace AppBanwao.KarryKart.Model
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Data.Objects.DataClasses;
+    using System.Linq;
     
     public partial class karrykartEntities : DbContext
     {
@@ -63,5 +66,18 @@ namespace AppBanwao.KarryKart.Model
         public DbSet<Payment> Payments { get; set; }
         public DbSet<GuestUserDetail> GuestUserDetails { get; set; }
         public DbSet<ImportantValue> ImportantValues { get; set; }
+        public DbSet<PaymentTransaction> PaymentTransactions { get; set; }
+        public DbSet<Panel> Panels { get; set; }
+        public DbSet<PanelItem> PanelItems { get; set; }
+    
+        public virtual int UpdatePageHit()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdatePageHit");
+        }
+    
+        public virtual ObjectResult<GetDashBoardCards_Result> GetDashBoardCards()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetDashBoardCards_Result>("GetDashBoardCards");
+        }
     }
 }

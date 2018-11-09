@@ -22,6 +22,12 @@ namespace AppBanwao.KaryKart.Web.Controllers
             using(_dbContext = new KarryKart.Model.karrykartEntities())
             {
                 ViewBag.Slider = _dbContext.Sliders.Where(x=>x.Active.Value).OrderBy(x=>x.SlideOrder).ToList();
+
+                if (User.IsInRole("Administrator"))
+                {
+                    var cards = _dbContext.GetDashBoardCards().ToList();
+                    ViewBag.AdminCards = cards;
+                }
                
             }
         }
