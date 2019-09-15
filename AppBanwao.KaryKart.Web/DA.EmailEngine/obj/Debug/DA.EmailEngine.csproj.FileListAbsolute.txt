@@ -20,3 +20,9 @@ D:\My work\DA work\Repo\KaryKartProject\AppBanwao.KaryKart.Web\DA.EmailEngine\bi
 D:\My work\DA work\Repo\KaryKartProject\AppBanwao.KaryKart.Web\DA.EmailEngine\bin\Debug\DA.EmailEngine.pdb
 D:\My work\DA work\Repo\KaryKartProject\AppBanwao.KaryKart.Web\DA.EmailEngine\obj\Debug\DA.EmailEngine.dll
 D:\My work\DA work\Repo\KaryKartProject\AppBanwao.KaryKart.Web\DA.EmailEngine\obj\Debug\DA.EmailEngine.pdb
+D:\My work\DA work\Repo\KarryKart\AppBanwao.KaryKart.Web\DA.EmailEngine\bin\Debug\DA.EmailEngine.dll.config
+D:\My work\DA work\Repo\KarryKart\AppBanwao.KaryKart.Web\DA.EmailEngine\bin\Debug\DA.EmailEngine.dll
+D:\My work\DA work\Repo\KarryKart\AppBanwao.KaryKart.Web\DA.EmailEngine\bin\Debug\DA.EmailEngine.pdb
+D:\My work\DA work\Repo\KarryKart\AppBanwao.KaryKart.Web\DA.EmailEngine\obj\Debug\DA.EmailEngine.csprojResolveAssemblyReference.cache
+D:\My work\DA work\Repo\KarryKart\AppBanwao.KaryKart.Web\DA.EmailEngine\obj\Debug\DA.EmailEngine.dll
+D:\My work\DA work\Repo\KarryKart\AppBanwao.KaryKart.Web\DA.EmailEngine\obj\Debug\DA.EmailEngine.pdb

@@ -68,5 +68,27 @@ namespace KarryKart.API.Helpers
                 _context.UpdatePageHit();
             }
         }
+
+        public static void AddUserAlert(Guid UserID, string message)
+        {
+            using (karrykartEntities context = new karrykartEntities())
+            { 
+            context.UserAlerts.Add(new UserAlert(){
+                UserID = UserID,
+                Message = message,
+                CreatedAt = DateTime.Now
+            });
+            context.SaveChanges();
+            }
+        }
+
+        public enum OrderStatus { 
+            Placed = 1,
+            Confirmed = 2,
+            Dispatched = 3,
+            InTransit = 4,
+            Delievered = 5,
+            Cancel = 6
+        }
     }
 }

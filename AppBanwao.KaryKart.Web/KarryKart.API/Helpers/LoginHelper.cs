@@ -22,7 +22,7 @@ namespace KarryKart.API.Helpers
                 using (_context = new karrykartEntities())
                 {
                     var user = _context.Users.Where(x => x.EmailAddress == model.user).FirstOrDefault();
-                    if (user.UserLogins.Count==0)
+                    if (user.UserLogins.Count == 0)
                     {
                         var userLogin = new UserLogin()
                         {
@@ -39,6 +39,17 @@ namespace KarryKart.API.Helpers
                         userInfo.UserID = userLogin.UserID.Value;
                         userInfo.Name = model.user;//(user.UserDetails != null) ? user.UserDetails.FirstOrDefault().FirstName : model.user;
 
+                    }
+                    else if (user.UserLogins.Count == 1)
+                    {
+                        var usrlogin = user.UserLogins.FirstOrDefault();
+                        usrlogin.TokenExpiry = usrlogin.TokenExpiry.Value.AddDays(15);
+                        _context.Entry(usrlogin).State = System.Data.Entity.EntityState.Modified;
+                        _context.SaveChanges();
+                        userInfo.ExpiryDateTime = usrlogin.TokenExpiry.Value;
+                        userInfo.Token = usrlogin.Token.Value;
+                        userInfo.UserID = usrlogin.UserID.Value;
+                        userInfo.Name = model.user;
                     }
                 }
             }

@@ -19,9 +19,11 @@
           <EntitySet Name="DeliverySlot" EntityType="KarrykartModel.Store.DeliverySlot" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="GuestUserDetail" EntityType="KarrykartModel.Store.GuestUserDetail" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ImportantValues" EntityType="KarrykartModel.Store.ImportantValues" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="KKExpense" EntityType="KarrykartModel.Store.KKExpense" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Logs" EntityType="KarrykartModel.Store.Logs" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Offers" EntityType="KarrykartModel.Store.Offers" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Order" EntityType="KarrykartModel.Store.Order" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="OrderJourney" EntityType="KarrykartModel.Store.OrderJourney" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="OrderProduct" EntityType="KarrykartModel.Store.OrderProduct" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="OTPHolder" EntityType="KarrykartModel.Store.OTPHolder" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Panel" EntityType="KarrykartModel.Store.Panel" store:Type="Tables" Schema="dbo" />
@@ -42,11 +44,14 @@
           <EntitySet Name="SizeType" EntityType="KarrykartModel.Store.SizeType" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Slider" EntityType="KarrykartModel.Store.Slider" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Subcategory" EntityType="KarrykartModel.Store.Subcategory" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="TredingProduct" EntityType="KarrykartModel.Store.TredingProduct" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Unit" EntityType="KarrykartModel.Store.Unit" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="UserAddressDetail" EntityType="KarrykartModel.Store.UserAddressDetail" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="UserAlert" EntityType="KarrykartModel.Store.UserAlert" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="UserDetail" EntityType="KarrykartModel.Store.UserDetail" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="UserLogin" EntityType="KarrykartModel.Store.UserLogin" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Users" EntityType="KarrykartModel.Store.Users" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="VideoLog" EntityType="KarrykartModel.Store.VideoLog" store:Type="Tables" Schema="dbo" />
           <AssociationSet Name="FK__PanelItem__Link__0F624AF8" Association="KarrykartModel.Store.FK__PanelItem__Link__0F624AF8">
             <End Role="Panel" EntitySet="Panel" />
             <End Role="PanelItem" EntitySet="PanelItem" />
@@ -127,6 +132,10 @@
             <End Role="Payment" EntitySet="Payment" />
             <End Role="Order" EntitySet="Order" />
           </AssociationSet>
+          <AssociationSet Name="FK_OrderJourney_Order1" Association="KarrykartModel.Store.FK_OrderJourney_Order1">
+            <End Role="Order" EntitySet="Order" />
+            <End Role="OrderJourney" EntitySet="OrderJourney" />
+          </AssociationSet>
           <AssociationSet Name="FK_OrderProduct_Order" Association="KarrykartModel.Store.FK_OrderProduct_Order">
             <End Role="Order" EntitySet="Order" />
             <End Role="OrderProduct" EntitySet="OrderProduct" />
@@ -139,6 +148,10 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="UserAddressDetail" EntitySet="UserAddressDetail" />
           </AssociationSet>
+          <AssociationSet Name="FK_UserAlert_Users" Association="KarrykartModel.Store.FK_UserAlert_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserAlert" EntitySet="UserAlert" />
+          </AssociationSet>
           <AssociationSet Name="FK_UserDetail_Users" Association="KarrykartModel.Store.FK_UserDetail_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="UserDetail" EntitySet="UserDetail" />
@@ -150,6 +163,10 @@
           <AssociationSet Name="FK_Users_Roles" Association="KarrykartModel.Store.FK_Users_Roles">
             <End Role="Roles" EntitySet="Roles" />
             <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VideoLog_Users" Association="KarrykartModel.Store.FK_VideoLog_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="VideoLog" EntitySet="VideoLog" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Brand">
@@ -181,6 +198,8 @@
           </Key>
           <Property Name="CategoryID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="ImageLink" Type="varchar" MaxLength="255" />
+          <Property Name="Active" Type="bit" />
         </EntityType>
         <EntityType Name="Country">
           <Key>
@@ -268,6 +287,16 @@
           <Property Name="Value" Type="int" />
           <Property Name="Type" Type="varchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="KKExpense">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="varchar" MaxLength="100" />
+          <Property Name="Amount" Type="decimal" Scale="2" />
+          <Property Name="DoneOn" Type="datetime" />
+          <Property Name="DoneBy" Type="varchar" MaxLength="100" />
+        </EntityType>
         <EntityType Name="Logs">
           <Key>
             <PropertyRef Name="LogId" />
@@ -304,6 +333,17 @@
           <Property Name="DeliveredOn" Type="datetime" />
           <Property Name="GuestCheckout" Type="bit" />
           <Property Name="DeliveryAddressID" Type="int" />
+        </EntityType>
+        <EntityType Name="OrderJourney">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="OrderID" Type="uniqueidentifier" />
+          <Property Name="OrderStatusID" Type="int" />
+          <Property Name="OrderStatus" Type="varchar" MaxLength="15" />
+          <Property Name="CreatedAt" Type="datetime" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="155" />
         </EntityType>
         <EntityType Name="OrderProduct">
           <Key>
@@ -440,6 +480,7 @@
           </Key>
           <Property Name="CityID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="StateID" Type="int" />
         </EntityType>
         <EntityType Name="refSaluation">
           <Key>
@@ -454,6 +495,7 @@
           </Key>
           <Property Name="StateID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="varchar" MaxLength="100" />
+          <Property Name="CountryID" Type="int" />
         </EntityType>
         <EntityType Name="Roles">
           <Key>
@@ -497,6 +539,17 @@
           <Property Name="Name" Type="varchar" MaxLength="100" />
           <Property Name="CategoryID" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="TredingProduct">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="ProductID" Type="uniqueidentifier" />
+          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="UpdatedOn" Type="datetime" />
+          <Property Name="CreatedBy" Type="uniqueidentifier" />
+          <Property Name="UpdatedBy" Type="uniqueidentifier" />
+        </EntityType>
         <EntityType Name="Unit">
           <Key>
             <PropertyRef Name="UnitID" />
@@ -517,6 +570,16 @@
           <Property Name="CountryID" Type="int" />
           <Property Name="Pincode" Type="varchar" MaxLength="10" />
           <Property Name="Landmark" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="UserAlert">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="uniqueidentifier" />
+          <Property Name="Message" Type="varchar" MaxLength="400" />
+          <Property Name="Seen" Type="bit" />
+          <Property Name="CreatedAt" Type="datetime" />
         </EntityType>
         <EntityType Name="UserDetail">
           <Key>
@@ -551,6 +614,19 @@
           <Property Name="Active" Type="bit" />
           <Property Name="RoleID" Type="int" />
           <Property Name="ProfileComplete" Type="bit" />
+        </EntityType>
+        <EntityType Name="VideoLog">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="nvarchar" MaxLength="200" />
+          <Property Name="Description" Type="nvarchar" MaxLength="400" />
+          <Property Name="Transcript" Type="nvarchar(max)" />
+          <Property Name="OwnerID" Type="uniqueidentifier" />
+          <Property Name="Link" Type="nvarchar" MaxLength="500" />
+          <Property Name="LikeCount" Type="bigint" />
+          <Property Name="ViewCount" Type="bigint" />
         </EntityType>
         <Association Name="FK__PanelItem__Link__0F624AF8">
           <End Role="Panel" Type="KarrykartModel.Store.Panel" Multiplicity="0..1" />
@@ -796,6 +872,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_OrderJourney_Order1">
+          <End Role="Order" Type="KarrykartModel.Store.Order" Multiplicity="0..1" />
+          <End Role="OrderJourney" Type="KarrykartModel.Store.OrderJourney" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="OrderJourney">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_OrderProduct_Order">
           <End Role="Order" Type="KarrykartModel.Store.Order" Multiplicity="0..1" />
           <End Role="OrderProduct" Type="KarrykartModel.Store.OrderProduct" Multiplicity="*" />
@@ -828,6 +916,18 @@
               <PropertyRef Name="UserID" />
             </Principal>
             <Dependent Role="UserAddressDetail">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserAlert_Users">
+          <End Role="Users" Type="KarrykartModel.Store.Users" Multiplicity="0..1" />
+          <End Role="UserAlert" Type="KarrykartModel.Store.UserAlert" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="UserAlert">
               <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
@@ -868,7 +968,23 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_VideoLog_Users">
+          <End Role="Users" Type="KarrykartModel.Store.Users" Multiplicity="0..1" />
+          <End Role="VideoLog" Type="KarrykartModel.Store.VideoLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="VideoLog">
+              <PropertyRef Name="OwnerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="GetAllOrders" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetDashBoardCards" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetSalesRevenue" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="for" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="UpdatePageHit" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -1022,6 +1138,27 @@
           </AssociationSet>
           <FunctionImport Name="UpdatePageHit" />
           <FunctionImport Name="GetDashBoardCards" ReturnType="Collection(KarrykartModel.GetDashBoardCards_Result)" />
+          <FunctionImport Name="GetSalesRevenue" ReturnType="Collection(KarrykartModel.GetSalesRevenue_Result)">
+          <Parameter Name="for" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="KKExpenses" EntityType="KarrykartModel.KKExpense" />
+          <EntitySet Name="TredingProducts" EntityType="KarrykartModel.TredingProduct" />
+          <EntitySet Name="VideoLogs" EntityType="KarrykartModel.VideoLog" />
+          <AssociationSet Name="FK_VideoLog_Users" Association="KarrykartModel.FK_VideoLog_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="VideoLog" EntitySet="VideoLogs" />
+          </AssociationSet>
+          <FunctionImport Name="GetAllOrders" ReturnType="Collection(KarrykartModel.GetAllOrders_Result)" />
+          <EntitySet Name="OrderJourneys" EntityType="KarrykartModel.OrderJourney" />
+          <EntitySet Name="UserAlerts" EntityType="KarrykartModel.UserAlert" />
+          <AssociationSet Name="FK_OrderJourney_Order1" Association="KarrykartModel.FK_OrderJourney_Order1">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="OrderJourney" EntitySet="OrderJourneys" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserAlert_Users" Association="KarrykartModel.FK_UserAlert_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="UserAlert" EntitySet="UserAlerts" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Brand">
           <Key>
@@ -1040,6 +1177,8 @@
           <Property Name="Name" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="Products" Relationship="KarrykartModel.FK__Product__Categor__398D8EEE" FromRole="Category" ToRole="Product" />
           <NavigationProperty Name="Products1" Relationship="KarrykartModel.FK__Product__Categor__412EB0B6" FromRole="Category" ToRole="Product" />
+          <Property Type="String" Name="ImageLink" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="Boolean" Name="Active" />
         </EntityType>
         <EntityType Name="Country">
           <Key>
@@ -1229,6 +1368,7 @@
           </Key>
           <Property Name="CityID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Type="Int32" Name="StateID" />
         </EntityType>
         <EntityType Name="refSaluation">
           <Key>
@@ -1243,6 +1383,7 @@
           </Key>
           <Property Name="StateID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Type="Int32" Name="CountryID" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -1572,6 +1713,7 @@
           <Property Type="DateTime" Name="DeliveredOn" Precision="3" />
           <Property Type="Boolean" Name="GuestCheckout" />
           <Property Type="Int32" Name="DeliveryAddressID" />
+          <NavigationProperty Name="OrderJourneys" Relationship="KarrykartModel.FK_OrderJourney_Order1" FromRole="Order" ToRole="OrderJourney" />
         </EntityType>
         <EntityType Name="OrderProduct">
           <Key>
@@ -1636,6 +1778,8 @@
           <NavigationProperty Name="UserAddressDetails" Relationship="KarrykartModel.FK_UserAddressDetail_Users" FromRole="User" ToRole="UserAddressDetail" />
           <NavigationProperty Name="UserDetails" Relationship="KarrykartModel.FK_UserDetail_Users" FromRole="User" ToRole="UserDetail" />
           <NavigationProperty Name="UserLogins" Relationship="KarrykartModel.FK_UserLogin_Users" FromRole="User" ToRole="UserLogin" />
+          <NavigationProperty Name="VideoLogs" Relationship="KarrykartModel.FK_VideoLog_Users" FromRole="User" ToRole="VideoLog" />
+          <NavigationProperty Name="UserAlerts" Relationship="KarrykartModel.FK_UserAlert_Users" FromRole="User" ToRole="UserAlert" />
         </EntityType>
         <Association Name="FK_Users_Roles">
           <End Type="KarrykartModel.Role" Role="Role" Multiplicity="0..1" />
@@ -1793,6 +1937,111 @@
           <Property Type="String" Name="Name" Nullable="true" MaxLength="30" />
           <Property Type="Int32" Name="CardCount" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="GetSalesRevenue_Result">
+          <Property Type="String" Name="Category" Nullable="false" MaxLength="3" />
+          <Property Type="Decimal" Name="Value" Nullable="true" Precision="38" Scale="2" />
+        </ComplexType>
+        <EntityType Name="KKExpense">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Description" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="Amount" Precision="18" Scale="2" />
+          <Property Type="DateTime" Name="DoneOn" Precision="3" />
+          <Property Type="String" Name="DoneBy" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="TredingProduct">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="Guid" Name="ProductID" />
+          <Property Type="DateTime" Name="CreatedOn" Precision="3" />
+          <Property Type="DateTime" Name="UpdatedOn" Precision="3" />
+          <Property Type="Guid" Name="CreatedBy" />
+          <Property Type="Guid" Name="UpdatedBy" />
+        </EntityType>
+        <EntityType Name="VideoLog">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Title" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Description" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Transcript" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="Guid" Name="OwnerID" />
+          <Property Type="String" Name="Link" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="Int64" Name="LikeCount" />
+          <Property Type="Int64" Name="ViewCount" />
+          <NavigationProperty Name="User" Relationship="KarrykartModel.FK_VideoLog_Users" FromRole="VideoLog" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_VideoLog_Users">
+          <End Type="KarrykartModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="KarrykartModel.VideoLog" Role="VideoLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="VideoLog">
+              <PropertyRef Name="OwnerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="GetAllOrders_Result">
+          <Property Type="Guid" Name="OrderID" Nullable="false" />
+          <Property Type="String" Name="IsGuest" Nullable="false" MaxLength="3" />
+          <Property Type="DateTime" Name="PlaceOn" Nullable="true" Precision="23" />
+          <Property Type="String" Name="EmailAddress" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="OrderStatus" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <EntityType Name="OrderJourney">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Guid" Name="OrderID" />
+          <Property Type="Int32" Name="OrderStatusID" />
+          <Property Type="String" Name="OrderStatus" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="CreatedAt" Precision="3" />
+          <Property Type="String" Name="CreatedBy" MaxLength="155" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Order" Relationship="KarrykartModel.FK_OrderJourney_Order1" FromRole="OrderJourney" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="UserAlert">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Guid" Name="UserID" />
+          <Property Type="String" Name="Message" MaxLength="400" FixedLength="false" Unicode="false" />
+          <Property Type="Boolean" Name="Seen" />
+          <Property Type="DateTime" Name="CreatedAt" Precision="3" />
+          <NavigationProperty Name="User" Relationship="KarrykartModel.FK_UserAlert_Users" FromRole="UserAlert" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_OrderJourney_Order1">
+          <End Type="KarrykartModel.Order" Role="Order" Multiplicity="0..1" />
+          <End Type="KarrykartModel.OrderJourney" Role="OrderJourney" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="OrderJourney">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserAlert_Users">
+          <End Type="KarrykartModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="KarrykartModel.UserAlert" Role="UserAlert" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="UserAlert">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1810,6 +2059,8 @@
           <EntitySetMapping Name="Categories">
             <EntityTypeMapping TypeName="KarrykartModel.Category">
               <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="ImageLink" ColumnName="ImageLink" />
                 <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>
@@ -1988,6 +2239,7 @@
           <EntitySetMapping Name="refCities">
             <EntityTypeMapping TypeName="KarrykartModel.refCity">
               <MappingFragment StoreEntitySet="refCity">
+                <ScalarProperty Name="StateID" ColumnName="StateID" />
                 <ScalarProperty Name="CityID" ColumnName="CityID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>
@@ -2004,6 +2256,7 @@
           <EntitySetMapping Name="refStates">
             <EntityTypeMapping TypeName="KarrykartModel.refState">
               <MappingFragment StoreEntitySet="refState">
+                <ScalarProperty Name="CountryID" ColumnName="CountryID" />
                 <ScalarProperty Name="StateID" ColumnName="StateID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>
@@ -2249,6 +2502,85 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetSalesRevenue" FunctionName="KarrykartModel.Store.GetSalesRevenue">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="KarrykartModel.GetSalesRevenue_Result">
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="KKExpenses">
+            <EntityTypeMapping TypeName="KarrykartModel.KKExpense">
+              <MappingFragment StoreEntitySet="KKExpense">
+                <ScalarProperty Name="DoneBy" ColumnName="DoneBy" />
+                <ScalarProperty Name="DoneOn" ColumnName="DoneOn" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TredingProducts">
+            <EntityTypeMapping TypeName="KarrykartModel.TredingProduct">
+              <MappingFragment StoreEntitySet="TredingProduct">
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VideoLogs">
+            <EntityTypeMapping TypeName="KarrykartModel.VideoLog">
+              <MappingFragment StoreEntitySet="VideoLog">
+                <ScalarProperty Name="ViewCount" ColumnName="ViewCount" />
+                <ScalarProperty Name="LikeCount" ColumnName="LikeCount" />
+                <ScalarProperty Name="Link" ColumnName="Link" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+                <ScalarProperty Name="Transcript" ColumnName="Transcript" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetAllOrders" FunctionName="KarrykartModel.Store.GetAllOrders">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="KarrykartModel.GetAllOrders_Result">
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="IsGuest" ColumnName="IsGuest" />
+                <ScalarProperty Name="PlaceOn" ColumnName="PlaceOn" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="OrderStatus" ColumnName="OrderStatus" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="OrderJourneys">
+            <EntityTypeMapping TypeName="KarrykartModel.OrderJourney">
+              <MappingFragment StoreEntitySet="OrderJourney">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="OrderStatus" ColumnName="OrderStatus" />
+                <ScalarProperty Name="OrderStatusID" ColumnName="OrderStatusID" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserAlerts">
+            <EntityTypeMapping TypeName="KarrykartModel.UserAlert">
+              <MappingFragment StoreEntitySet="UserAlert">
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="Seen" ColumnName="Seen" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

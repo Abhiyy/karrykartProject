@@ -1,8 +1,8 @@
 ﻿body {
-    //font-size: .85em;
+   
     font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
     color: #232323;
-    background-color: #fff;
+    background-color: #fafafa;
 }
 
 header, footer, nav, section {
@@ -200,7 +200,53 @@ color:#fff;
 color:#a40041;
 }
 .addCartButton {
-color:#017a90;
-font-size:20px;
-float:right;
-margin-right:20px;
+    color: #017a90;
+    font-size: 20px;
+    float: right;
+    margin-right: 20px;
+}
+.bluegreen {
+background-color:#0e7c7b !important;
+color:#fff !important;
+}
+.logoSection {
+background-color:#fff !important;
+}
+.blueCosmo {
+background-color:#19647e;
+color:#ffc857 !important;
+}
+.bluegreenGradient {
+/*background-color:#03b5aa !important;*/
+  background-image:linear-gradient(to right, #19647e , #0e7c7b) !important;
+color:#fff !important;
+}
+
+.productCategories {
+margin-top:1rem;
+}
+.productCategories h5{
+   font-size:2.5rem;
+  color:#ffffea;
+   font-weight:bold;
+   height:100%
+}
+.noBorder {
+
+}
+
+.vertical {
+        transform: rotate(-180deg) !important;
+    flex: 0 0 auto !important;
+    white-space: nowrap !important;
+    text-orientation: sideways-right !important;
+    writing-mode: vertical-rl !important;
+}
+
+.verticalHeadingPanel {
+    display: flex !important;
+}
+
+.whiteBack {
+background-color:#fff !important;
+}

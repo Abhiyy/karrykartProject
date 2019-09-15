@@ -22,6 +22,8 @@ namespace AppBanwao.KarryKart.Model
     
         public int CategoryID { get; set; }
         public string Name { get; set; }
+        public string ImageLink { get; set; }
+        public Nullable<bool> Active { get; set; }
     
         public virtual ICollection<Product> Products { get; set; }
         public virtual ICollection<Product> Products1 { get; set; }

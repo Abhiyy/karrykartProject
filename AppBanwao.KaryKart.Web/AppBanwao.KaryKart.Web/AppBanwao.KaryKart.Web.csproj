@@ -140,9 +140,13 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BrandController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
+    <Compile Include="Controllers\CategoryProductsController.cs" />
+    <Compile Include="Controllers\ChartController.cs" />
+    <Compile Include="Controllers\CityController.cs" />
     <Compile Include="Controllers\CountryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OfferController.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\PanelController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\ProductDetailsController.cs" />
@@ -150,24 +154,31 @@
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\SliderController.cs" />
     <Compile Include="Controllers\SmsController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\ApiHelper.cs" />
+    <Compile Include="Helpers\ChartHelper.cs" />
     <Compile Include="Helpers\CommonHelper.cs" />
     <Compile Include="Helpers\CustomHandleErrorAttribute .cs" />
     <Compile Include="Helpers\CustomPrincipal.cs" />
     <Compile Include="Helpers\EmailHelper.cs" />
+    <Compile Include="Helpers\LocationHelper.cs" />
     <Compile Include="Helpers\MessageHelper.cs" />
+    <Compile Include="Helpers\OrderHelper.cs" />
     <Compile Include="Helpers\ProductHelper.cs" />
     <Compile Include="Helpers\SmsHelper.cs" />
     <Compile Include="Helpers\UserHelper.cs" />
     <Compile Include="Models\BrandModel.cs" />
     <Compile Include="Models\CategoryModel.cs" />
+    <Compile Include="Models\CityModel.cs" />
     <Compile Include="Models\CountryModel.cs" />
     <Compile Include="Models\CurrencyModel.cs" />
+    <Compile Include="Models\D3ChartModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\OfferModel.cs" />
+    <Compile Include="Models\OrderModel.cs" />
     <Compile Include="Models\OtpModel.cs" />
     <Compile Include="Models\ProductDetailsModel.cs" />
     <Compile Include="Models\ProductModel.cs" />
@@ -184,6 +195,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\EmailTemplates\ChangePasswordEmail.txt" />
+    <Content Include="App_Data\EmailTemplates\OrderStatusUpdateEmail.txt" />
     <Content Include="App_Data\EmailTemplates\OtpEmail.txt" />
     <Content Include="App_Data\EmailTemplates\OtpVerificationEmail.txt" />
     <Content Include="App_Data\EmailTemplates\RegisterConfirmation.txt" />
@@ -919,11 +931,13 @@
     <Content Include="Scripts\angular-touch.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\App\CategoryProduct.js" />
     <Content Include="Scripts\App\ForgotPwdCtrl.js" />
     <Content Include="Scripts\App\GlobalService.js" />
     <Content Include="Scripts\App\HomeCtrl.js" />
     <Content Include="Scripts\App\LoginCtrl.js" />
     <Content Include="Scripts\App\MyAccountCtrl.js" />
+    <Content Include="Scripts\App\OrderCtrl.js" />
     <Content Include="Scripts\App\ProductCtrl.js" />
     <Content Include="Scripts\App\RegisterCtrl.js" />
     <Content Include="Scripts\App\SearchResultsCtrl.js" />
@@ -1364,12 +1378,6 @@
     <Content Include="Content\kendo\2017.1.118\fonts\DejaVu\DejaVuSans-BoldOblique.ttf" />
     <Content Include="Content\kendo\2017.1.118\fonts\DejaVu\DejaVuSans-Bold.ttf" />
     <Content Include="Content\kendo\2017.1.118\fonts\DejaVu\DejaVuSans.ttf" />
-    <Content Include="fonts\fontawesome-webfont.woff2" />
-    <Content Include="fonts\fontawesome-webfont.woff" />
-    <Content Include="fonts\fontawesome-webfont.ttf" />
-    <Content Include="fonts\fontawesome-webfont.svg" />
-    <Content Include="fonts\fontawesome-webfont.eot" />
-    <Content Include="fonts\FontAwesome.otf" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -1377,6 +1385,12 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\FontAwesome.otf" />
     <None Include="Properties\PublishProfiles\kkpub.pubxml" />
     <Content Include="Images\logo.png" />
     <Content Include="Images\Slider\girl1.jpg" />
@@ -2730,6 +2744,8 @@
     <Content Include="Scripts\popper-utils.min.js" />
     <Content Include="Scripts\popper.js" />
     <Content Include="Scripts\popper.min.js" />
+    <Content Include="Scripts\react\order\detail.js" />
+    <Content Include="Scripts\react\test.js" />
     <Content Include="Scripts\Site.js" />
     <Content Include="Scripts\umd\popper-utils.js" />
     <Content Include="Scripts\umd\popper-utils.min.js" />
@@ -3359,6 +3375,14 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\version.json" />
     <Content Include="Views\Home\_PartialSalesChart.cshtml" />
+    <Content Include="Views\Shared\_PartialCategorySlider.cshtml" />
+    <Content Include="Views\CategoryProducts\Index.cshtml" />
+    <Content Include="Views\City\Index.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\Order\Index.cshtml" />
+    <Content Include="Views\Order\Details.cshtml" />
+    <Content Include="Views\Shared\_PartialReact.cshtml" />
+    <Content Include="Views\Shared\_PartialKendo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Images\Product\" />

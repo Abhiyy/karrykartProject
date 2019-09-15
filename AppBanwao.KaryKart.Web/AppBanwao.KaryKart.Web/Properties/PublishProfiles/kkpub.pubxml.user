@@ -26,10 +26,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/02/2016 22:03:29</publishTime>
     </File>
     <File Include="bin/AppBanwao.KarryKart.Model.dll">
-      <publishTime>11/05/2018 09:27:10</publishTime>
+      <publishTime>11/09/2018 23:43:16</publishTime>
     </File>
     <File Include="bin/AppBanwao.KaryKart.Web.dll">
-      <publishTime>11/05/2018 10:31:51</publishTime>
+      <publishTime>11/09/2018 23:43:17</publishTime>
     </File>
     <File Include="bin/DA.EmailEngine.dll">
       <publishTime>01/19/2017 08:52:06</publishTime>
@@ -4724,7 +4724,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/06/2017 09:56:09</publishTime>
     </File>
     <File Include="Scripts/App/GlobalService.js">
-      <publishTime>11/05/2018 11:00:33</publishTime>
+      <publishTime>11/09/2018 23:47:24</publishTime>
     </File>
     <File Include="Scripts/App/HomeCtrl.js">
       <publishTime>12/17/2017 16:39:14</publishTime>
@@ -12209,7 +12209,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/05/2018 10:15:55</publishTime>
     </File>
     <File Include="Scripts/Site.js">
-      <publishTime>07/18/2016 22:34:58</publishTime>
+      <publishTime>11/09/2018 23:19:23</publishTime>
     </File>
     <File Include="Scripts/umd/popper-utils.js">
       <publishTime>11/05/2018 10:15:54</publishTime>
@@ -12281,7 +12281,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/24/2016 09:04:38</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
-      <publishTime>11/05/2018 08:43:45</publishTime>
+      <publishTime>11/09/2018 23:57:27</publishTime>
+    </File>
+    <File Include="Views/Home/_PartialSalesChart.cshtml">
+      <publishTime>11/09/2018 23:42:18</publishTime>
     </File>
     <File Include="Views/Offer/Create.cshtml">
       <publishTime>07/24/2016 09:04:38</publishTime>
@@ -12353,7 +12356,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/24/2016 09:04:38</publishTime>
     </File>
     <File Include="Views/Shared/_LayoutMaster.cshtml">
-      <publishTime>11/05/2018 08:40:56</publishTime>
+      <publishTime>11/08/2018 08:52:02</publishTime>
     </File>
     <File Include="Views/Shared/_PartialAdminCards.cshtml">
       <publishTime>11/08/2018 08:26:01</publishTime>
@@ -12395,7 +12398,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/24/2016 09:04:38</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>11/08/2018 08:26:30</publishTime>
+      <publishTime>11/09/2018 23:57:42</publishTime>
     </File>
   </ItemGroup>
 </Project>

@@ -1,0 +1,42 @@
+﻿@{
+    ViewBag.Title = "User List";
+    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
+}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
+<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<h2>User List</h2>
+<div class="row">
+<div class="well whiteBack">
+<table id="users" class="dataTable table table-striped"></table>
+</div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        BuildUserList();
+    });
+
+    function BuildUserList()
+    {
+        $.ajax('@Url.Action("GetData","User")', {
+            type: 'GET',  // http method
+           // data: { type: vType },  // data to submit
+            success: function (datas, status, xhr) {
+                $('#users').DataTable({
+
+                    data: datas,
+                    "columns": [
+                        { "data": "UserID", 'title': 'UserID' },
+                        { "data": "EmailAddress", 'title': 'EmailAddress' },
+                        { "data": "FirstName", 'title': 'FirstName' },
+                         { "data": "Active", 'title': 'Is Active' }
+                        
+                        
+                    ]
+                });
+            },
+            error: function (jqXhr, textStatus, errorMessage) {
+                $('p').append('Error' + errorMessage);
+            }
+        });
+    }
+</script>

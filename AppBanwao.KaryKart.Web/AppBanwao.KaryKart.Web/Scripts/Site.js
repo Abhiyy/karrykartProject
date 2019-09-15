@@ -17,3 +17,4 @@ function SwitchToTab(tabname)
 function GetPleaseWait() {
     return "<i class='fa fa-spinner'></i> Please wait..."
 }
+

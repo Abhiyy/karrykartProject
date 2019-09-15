@@ -19,6 +19,8 @@ namespace AppBanwao.KarryKart.Model
             this.UserAddressDetails = new HashSet<UserAddressDetail>();
             this.UserDetails = new HashSet<UserDetail>();
             this.UserLogins = new HashSet<UserLogin>();
+            this.VideoLogs = new HashSet<VideoLog>();
+            this.UserAlerts = new HashSet<UserAlert>();
         }
     
         public System.Guid UserID { get; set; }
@@ -35,5 +37,7 @@ namespace AppBanwao.KarryKart.Model
         public virtual ICollection<UserAddressDetail> UserAddressDetails { get; set; }
         public virtual ICollection<UserDetail> UserDetails { get; set; }
         public virtual ICollection<UserLogin> UserLogins { get; set; }
+        public virtual ICollection<VideoLog> VideoLogs { get; set; }
+        public virtual ICollection<UserAlert> UserAlerts { get; set; }
     }
 }

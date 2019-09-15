@@ -140,5 +140,27 @@ namespace KarryKart.API.Helpers
          }
          return null;
         }
+
+        public CartDetailsModel ApplyCouponCode(Guid CartID, string CouponCode)
+        {
+            using (_context = new karrykartEntities())
+            {
+                var coupon = _context.Coupons.Where(x => x.DisplayName.ToUpper() == CouponCode.ToUpper()).FirstOrDefault();
+                if (coupon != null)
+                {
+                    var couponValue = _context.CouponValues.Where(x => x.CouponID == coupon.CouponID).FirstOrDefault();
+                    var cart = GetCart(CartID);
+                    cart.CartTotal = (double)(cart.CartTotal - (((double)couponValue.CouponValue1.Value / 100) * cart.CartTotal));
+                    cart.SubTotal = ((double)(cart.TaxPercentage) / 100) * cart.CartTotal;
+                    cart.GrandTotal = cart.CartTotal + cart.SubTotal;
+                    return cart;
+                }
+                else {
+                    return null;
+                }
+               
+            }
+        }
+
     }
 }

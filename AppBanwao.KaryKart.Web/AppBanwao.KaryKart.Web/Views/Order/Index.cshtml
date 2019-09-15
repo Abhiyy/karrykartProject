@@ -1,0 +1,55 @@
+﻿@{
+    ViewBag.Title = "Orders List";
+    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
+}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
+<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<h2>Orders List</h2>
+<div class="row">
+<div class="well whiteBack">
+<table id="orders" class="dataTable table table-striped"></table>
+</div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        BuildUserList();
+
+        $('#orders tbody').on( 'click', 'button', function () {
+            var data = table.row( $(this).parents('tr') ).data();
+            alert( data[0] +"'s salary is: "+ data[0] );
+        } );
+    
+    });
+
+    function BuildUserList()
+    {
+        $.ajax('@Url.Action("GetOrders","Order")', {
+            type: 'GET',  // http method
+           // data: { type: vType },  // data to submit
+            success: function (datas, status, xhr) {
+                $('#orders').DataTable({
+
+                    data: datas,
+                    "columns": [
+                        { "data": "OrderID", 'title': 'OrderID' },
+                        { "data": "UserEmailAddress", 'title': 'Customer Email' },
+                        { "data": "IsGuest", 'title': 'Is Guest Checkout' },
+                        { "data": "Status", 'title': 'Order Status' },
+                        { "data": "PlaceOn", 'title': 'Placed On' },
+                        {
+                            title: 'Actions', render: function (data, type, row) {
+                                
+                                return '<a href="order/details?id=' + row.OrderID + '" class="btn-sm btn-primary bluegreen"><i class="fa fa-search"></i></button>';
+                        } 
+                        }
+                        
+                        
+                    ]
+                });
+            },
+            error: function (jqXhr, textStatus, errorMessage) {
+                $('p').append('Error' + errorMessage);
+            }
+        });
+    }
+</script>

@@ -85,7 +85,13 @@
     <Compile Include="DeliverySlot.cs">
       <DependentUpon>karrykart.tt</DependentUpon>
     </Compile>
+    <Compile Include="GetAllOrders_Result.cs">
+      <DependentUpon>karrykart.tt</DependentUpon>
+    </Compile>
     <Compile Include="GetDashBoardCards_Result.cs">
+      <DependentUpon>karrykart.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetSalesRevenue_Result.cs">
       <DependentUpon>karrykart.tt</DependentUpon>
     </Compile>
     <Compile Include="GuestUserDetail.cs">
@@ -109,6 +115,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>karrykart.edmx</DependentUpon>
     </Compile>
+    <Compile Include="KKExpense.cs">
+      <DependentUpon>karrykart.tt</DependentUpon>
+    </Compile>
     <Compile Include="Log.cs">
       <DependentUpon>karrykart.tt</DependentUpon>
     </Compile>
@@ -117,6 +126,9 @@
       <DependentUpon>karrykart.tt</DependentUpon>
     </Compile>
     <Compile Include="Order.cs">
+      <DependentUpon>karrykart.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OrderJourney.cs">
       <DependentUpon>karrykart.tt</DependentUpon>
     </Compile>
     <Compile Include="OrderProduct.cs">
@@ -180,6 +192,9 @@
     <Compile Include="Subcategory.cs">
       <DependentUpon>karrykart.tt</DependentUpon>
     </Compile>
+    <Compile Include="TredingProduct.cs">
+      <DependentUpon>karrykart.tt</DependentUpon>
+    </Compile>
     <Compile Include="Unit.cs">
       <DependentUpon>karrykart.tt</DependentUpon>
     </Compile>
@@ -189,10 +204,16 @@
     <Compile Include="UserAddressDetail.cs">
       <DependentUpon>karrykart.tt</DependentUpon>
     </Compile>
+    <Compile Include="UserAlert.cs">
+      <DependentUpon>karrykart.tt</DependentUpon>
+    </Compile>
     <Compile Include="UserDetail.cs">
       <DependentUpon>karrykart.tt</DependentUpon>
     </Compile>
     <Compile Include="UserLogin.cs">
+      <DependentUpon>karrykart.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VideoLog.cs">
       <DependentUpon>karrykart.tt</DependentUpon>
     </Compile>
   </ItemGroup>

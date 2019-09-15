@@ -19,6 +19,7 @@ namespace KarryKart.API.Models
         public int PaymentType { get; set; }
         public Guid TransactionID { get; set; }
         public string TransactionStatus { get; set; }
+        public string Coupon { get; set; }
     }
 
    

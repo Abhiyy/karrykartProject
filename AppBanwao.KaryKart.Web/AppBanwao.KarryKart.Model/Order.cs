@@ -17,6 +17,7 @@ namespace AppBanwao.KarryKart.Model
         public Order()
         {
             this.OrderProducts = new HashSet<OrderProduct>();
+            this.OrderJourneys = new HashSet<OrderJourney>();
         }
     
         public System.Guid ID { get; set; }
@@ -31,5 +32,6 @@ namespace AppBanwao.KarryKart.Model
     
         public virtual ICollection<OrderProduct> OrderProducts { get; set; }
         public virtual Payment Payment { get; set; }
+        public virtual ICollection<OrderJourney> OrderJourneys { get; set; }
     }
 }

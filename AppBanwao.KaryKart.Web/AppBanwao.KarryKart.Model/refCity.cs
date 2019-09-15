@@ -16,5 +16,6 @@ namespace AppBanwao.KarryKart.Model
     {
         public int CityID { get; set; }
         public string Name { get; set; }
+        public Nullable<int> StateID { get; set; }
     }
 }

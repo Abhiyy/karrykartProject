@@ -108,6 +108,30 @@ namespace AppBanwao.KaryKart.Web.Helpers
             return false;
         }
 
+        public bool SendOrderUpdateChangeEmail(string toEmail, string status)
+        {
+
+            string body;
+            //Read template file from the App_Data folder
+            try
+            {
+                using (var sr = new StreamReader(HttpContext.Current.Server.MapPath(@"\\App_Data\\EmailTemplates\OrderStatusUpdateEmail.txt")))
+                {
+                    body = sr.ReadToEnd();
+                }
+
+                string messagebody = string.Format(body, _companyLogo, toEmail, status, _supportPhone);
+
+                return SendEmail("Karrykart.com - Order Udpate", messagebody, toEmail);
+
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            return false;
+        }
+
         bool SendEmail(string Subject, string Body, string EmailAddress)
         {
             //StringBuilder

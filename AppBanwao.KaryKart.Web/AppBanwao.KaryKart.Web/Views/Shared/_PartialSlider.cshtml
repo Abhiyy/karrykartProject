@@ -3,9 +3,22 @@
     
     var slider = (List<AppBanwao.KarryKart.Model.Slider>) ViewBag.Slider;
 }
-
-@if(slider.Count >0)
+<style>
+    .carousel-caption {
+    color:#173753 !important;
+}
+</style>
+@if(slider!=null)
 {
+if(slider.Count >0)
+{
+    <div class="row" id="categoryMenu">
+    <div class="col-sm-12">
+        <div class="panel productCategories verticalHeadingPanel panel-default">
+            <div class="panel-heading bluegreenGradient text-center">
+                <h5 class="text-uppercase vertical text-center">Offer Zone</h5>
+            </div>
+            <div class="panel-body">
 <div id="myCarousel" class="carousel slide" data-ride="carousel">
     <!-- Indicators -->
     <ol class="carousel-indicators">
@@ -42,7 +55,8 @@
         <div class="item">
             <img src="@Url.Content(slide.ImageLink)" class="img-responsive" alt="Chania">
             <div class="carousel-caption">
-
+                  <h2>@slide.OfferHeading</h2>
+                <h4>@slide.Offer</h4>
             </div>
         </div>
         }
@@ -61,5 +75,9 @@
         <span class="sr-only">Next</span>
     </a>
 </div>
-
+                </div>
+            </div>
+        </div>
+        </div>
+}
 }

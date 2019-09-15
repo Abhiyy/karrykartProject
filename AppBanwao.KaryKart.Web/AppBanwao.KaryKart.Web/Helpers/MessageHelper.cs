@@ -54,6 +54,12 @@ namespace AppBanwao.KaryKart.Web.Helpers
            
         }
 
+        public class OrderAdmin {
+            public const string SUCCESS = "success";
+            public const string ERROR = "error";
+        
+        }
+
     }
 
     

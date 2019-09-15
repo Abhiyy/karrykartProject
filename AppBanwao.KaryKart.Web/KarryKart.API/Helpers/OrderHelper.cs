@@ -31,7 +31,7 @@ namespace KarryKart.API.Helpers
                 if (cart != null)
                 {
                     _cartHelper = new CartHelper();
-                    var cartDetails = _cartHelper.GetCart(OrderToCheckout.CartID);
+                    var cartDetails = String.IsNullOrEmpty(OrderToCheckout.Coupon)?_cartHelper.GetCart(OrderToCheckout.CartID):_cartHelper.ApplyCouponCode(OrderToCheckout.CartID,OrderToCheckout.Coupon);
                     var payment = new Payment() { ID = OrderToCheckout.GuestCheckout?Guid.NewGuid():OrderToCheckout.TransactionID==Guid.Empty?Guid.NewGuid():OrderToCheckout.TransactionID, Amount = Convert.ToDecimal(cartDetails.GrandTotal), Type = OrderToCheckout.PaymentType, IsSuccessful = OrderToCheckout.GuestCheckout ? false : OrderToCheckout.TransactionStatus=="success"? true:false };
                     _context.Payments.Add(payment);
                     _context.SaveChanges();
@@ -39,7 +39,7 @@ namespace KarryKart.API.Helpers
                                               CartID=cart.ID,
                                               UserID=OrderToCheckout.UserID,
                                               PaymentID=payment.ID,
-                                              Status=1,
+                                              Status= (int)APICommonHelper.OrderStatus.Placed,
                                               PlaceOn=DateTime.Now,
                                               GuestCheckout=OrderToCheckout.GuestCheckout,
                                               DeliveryAddressID=OrderToCheckout.GuestCheckout?0:OrderToCheckout.AddressID};
@@ -65,13 +65,11 @@ namespace KarryKart.API.Helpers
                     else {
                         userDetails = _loginHelper.GetGuestUserDetails(OrderToCheckout.UserID);
                     }
-                    var orderHtml = BuildOrderHtml(cartDetails, order, cart, userDetails,GetOrderStatus(order,_context));
+                    var orderHtml = BuildOrderHtml(cartDetails, order, cart, userDetails,GetOrderStatus(order,_context),OrderToCheckout.Coupon);
                     _emailHelper.SendOrderPlacedEmail(userDetails.FirstName+" " + userDetails.LastName, userDetails.Email, orderHtml);
                     _emailHelper.SendOrderPlacedEmail("Admin", _adminEmail, orderHtml);
-                   // string smsMsg = "Hi " + user.UserDetails.FirstOrDefault().FirstName + user.UserDetails.FirstOrDefault().LastName + ", thank you for placing order with us. Your order will be confirmed shortly.";
-           //         _smsHelper = new SmsHelper();
-           //         _smsHelper.SendOrderConfirmationToUser(new SmsModel() { Message =smsMsg , Number = contact });
-                   // _smsHelper = null;
+                    AddOrderJourneyElement(order.ID, order.Status.Value, APICommonHelper.OrderStatus.Placed.ToString(), userDetails.Email);
+                    APICommonHelper.AddUserAlert(userDetails.UserID, "Order has been placed succefully. Please go to my orders page for more details.");
                     var orderDetail = new OrderModel() { OrderID = order.ID, OrderPlaced = true };
                     return orderDetail;
                 }
@@ -79,6 +77,23 @@ namespace KarryKart.API.Helpers
             return null;
 
            
+        }
+
+        public List<OrderDetailModel> GetOrders() {
+            List<OrderDetailModel> lstOrders = null;
+            using (_context = new karrykartEntities())
+            {
+                var lstOrder = _context.Orders.OrderByDescending(o => o.PlaceOn).ToList();
+                if (lstOrder.Count > 0)
+                {
+                    lstOrders = new List<OrderDetailModel>();
+                    foreach (var order in lstOrder)
+                    {
+                        lstOrders.Add(GetOrder(order.ID));
+                    }
+                }
+            }
+            return lstOrders;
         }
 
         public  List<OrderDetailModel>  GetOrderByCartID(Guid UserID, Guid CartID)
@@ -157,7 +172,7 @@ namespace KarryKart.API.Helpers
             return order;
         }
 
-        private string BuildOrderHtml(CartDetailsModel cartDetails, Order order, Cart cart, UserDetails address, string OrderStatus)
+        private string BuildOrderHtml(CartDetailsModel cartDetails, Order order, Cart cart, UserDetails address, string OrderStatus,string Coupon="")
         {
             StringBuilder orderHtml = new StringBuilder();
             var productHelper= new ProductHelper();
@@ -192,30 +207,49 @@ namespace KarryKart.API.Helpers
             foreach (var product in cart.CartProducts)
             {
                 var productDetails = productHelper.GetProductDetail(product.ProductID.Value);
-                orderHtml .Append( "<tr style='padding:5px'>");
-                orderHtml .Append( "<td>"+productDetails.Name+"</td>");
-                orderHtml .Append( "<td>" +product.Quantity + "</td>");
-                orderHtml .Append( "<td>" + productDetails.Prices.FirstOrDefault().Price.ToString() + "</td>");
-                orderHtml .Append( "<td>" + (product.Quantity * productDetails.Prices.FirstOrDefault().Price).ToString() + "</td>");
-                orderHtml .Append( "</tr>");
+                orderHtml.Append("<tr style='padding:5px'>");
+                orderHtml.Append("<td>" + productDetails.Name + "</td>");
+                orderHtml.Append("<td>" + product.Quantity + "</td>");
+                if (String.IsNullOrEmpty(Coupon))
+                {
+                    orderHtml.Append("<td>" + productDetails.Prices.FirstOrDefault().Price.ToString() + "</td>");
+                    orderHtml.Append("<td>" + (product.Quantity * productDetails.Prices.FirstOrDefault().Price).ToString() + "</td>");
+                }
+                else
+                {
+
+                    using (_context = new karrykartEntities())
+                    {
+                        var coupon = _context.Coupons.Where(x => x.DisplayName.ToUpper() == Coupon.ToUpper()).FirstOrDefault();
+                        if (coupon != null)
+                        {
+                            var couponValue = _context.CouponValues.Where(x => x.CouponID == coupon.CouponID).FirstOrDefault();
+                            orderHtml.Append("<td>" + (productDetails.Prices.FirstOrDefault().Price - (productDetails.Prices.FirstOrDefault().Price * (couponValue.CouponValue1.Value / 100))).ToString() + "</td>");
+                            orderHtml.Append("<td>" + (product.Quantity * (productDetails.Prices.FirstOrDefault().Price - (productDetails.Prices.FirstOrDefault().Price * (couponValue.CouponValue1.Value / 100)))).ToString() + "</td>");
+                        }
+                    }
+                }
             }
-            orderHtml.Append("<tr style='padding:5px'>");
-            orderHtml.Append("<td>Tax("+cartDetails.TaxPercentage+"%) </td>");
-            orderHtml.Append("<td></td>");
-            orderHtml.Append("<td></td>");
-            orderHtml.Append("<td>" + cartDetails.SubTotal + "</td>");
-            orderHtml.Append("</tr>");
 
 
-            orderHtml.Append("<tr style='padding:5px'>");
-            orderHtml.Append("<td><b>Grand Total</b></td>");
-            orderHtml.Append("<td></td>");
-            orderHtml.Append("<td></td>");
-            orderHtml.Append("<td><b>" + cartDetails.GrandTotal + "</b></td>");
-            orderHtml.Append("</tr>");
-            orderHtml.Append("</tbody>");
-            orderHtml.Append("</table>");
+                orderHtml.Append("</tr>");
+                orderHtml.Append("<tr style='padding:5px'>");
+                orderHtml.Append("<td>Tax(" + cartDetails.TaxPercentage + "%) </td>");
+                orderHtml.Append("<td></td>");
+                orderHtml.Append("<td></td>");
+                orderHtml.Append("<td>" + cartDetails.SubTotal + "</td>");
+                orderHtml.Append("</tr>");
 
+
+                orderHtml.Append("<tr style='padding:5px'>");
+                orderHtml.Append("<td><b>Grand Total</b></td>");
+                orderHtml.Append("<td></td>");
+                orderHtml.Append("<td></td>");
+                orderHtml.Append("<td><b>" + cartDetails.GrandTotal + "</b></td>");
+                orderHtml.Append("</tr>");
+                orderHtml.Append("</tbody>");
+                orderHtml.Append("</table>");
+            
             return orderHtml.ToString();
         }
 
@@ -223,5 +257,22 @@ namespace KarryKart.API.Helpers
         {
             return context.ImportantValues.Where(i => i.Value == order.Status.Value && i.Type == "OrderStatus").FirstOrDefault().Description;
         }
+
+        public void AddOrderJourneyElement(Guid OrderID, int StatusID, string OrderStatus, string user)
+        {
+            var OrderJourney = new OrderJourney() {
+                OrderID = OrderID,
+                OrderStatusID = StatusID,
+                OrderStatus = OrderStatus,
+                CreatedAt = DateTime.Now,
+                CreatedBy = user
+            };
+
+            _context.OrderJourneys.Add(OrderJourney);
+            _context.SaveChanges();
+
+        }
+
+        
     }
 }

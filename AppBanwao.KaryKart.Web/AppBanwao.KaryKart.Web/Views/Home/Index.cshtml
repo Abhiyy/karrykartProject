@@ -2,7 +2,18 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutMaster.cshtml";
 }
-
+<script type="text/javascript">
+	function redirect()
+	{
+	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+	    window.location = "http://m.karrykart.com/"; 
+	   // window.location = "http://hg.karrykart.com/";
+	}
+	}
+	
+	redirect();
+	ShowMenu(true);
+</script>
 <div class="row">
     <div class="col-md-12">
         @if(User.IsInRole("Administrator")){
@@ -10,7 +21,7 @@
          @Html.Partial("_PartialSalesChart")
         }
         else{
-        @Html.Partial("_PartialSlider")
+            
         }
     </div>
 </div>

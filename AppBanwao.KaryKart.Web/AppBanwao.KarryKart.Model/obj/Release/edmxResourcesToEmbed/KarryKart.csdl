@@ -148,6 +148,9 @@
     </AssociationSet>
     <FunctionImport Name="UpdatePageHit" />
     <FunctionImport Name="GetDashBoardCards" ReturnType="Collection(KarrykartModel.GetDashBoardCards_Result)" />
+    <FunctionImport Name="GetSalesRevenue" ReturnType="Collection(KarrykartModel.GetSalesRevenue_Result)">
+      <Parameter Name="for" Mode="In" Type="String" />
+    </FunctionImport>
   </EntityContainer>
   <EntityType Name="Brand">
     <Key>
@@ -918,5 +921,9 @@
   <ComplexType Name="GetDashBoardCards_Result">
     <Property Type="String" Name="Name" Nullable="true" MaxLength="30" />
     <Property Type="Int32" Name="CardCount" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="GetSalesRevenue_Result">
+    <Property Type="String" Name="Category" Nullable="false" MaxLength="3" />
+    <Property Type="Decimal" Name="Value" Nullable="true" Precision="38" Scale="2" />
   </ComplexType>
 </Schema>

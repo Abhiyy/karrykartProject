@@ -69,6 +69,11 @@ namespace AppBanwao.KarryKart.Model
         public DbSet<PaymentTransaction> PaymentTransactions { get; set; }
         public DbSet<Panel> Panels { get; set; }
         public DbSet<PanelItem> PanelItems { get; set; }
+        public DbSet<KKExpense> KKExpenses { get; set; }
+        public DbSet<TredingProduct> TredingProducts { get; set; }
+        public DbSet<VideoLog> VideoLogs { get; set; }
+        public DbSet<OrderJourney> OrderJourneys { get; set; }
+        public DbSet<UserAlert> UserAlerts { get; set; }
     
         public virtual int UpdatePageHit()
         {
@@ -78,6 +83,20 @@ namespace AppBanwao.KarryKart.Model
         public virtual ObjectResult<GetDashBoardCards_Result> GetDashBoardCards()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetDashBoardCards_Result>("GetDashBoardCards");
+        }
+    
+        public virtual ObjectResult<GetSalesRevenue_Result> GetSalesRevenue(string @for)
+        {
+            var forParameter = @for != null ?
+                new ObjectParameter("for", @for) :
+                new ObjectParameter("for", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetSalesRevenue_Result>("GetSalesRevenue", forParameter);
+        }
+    
+        public virtual ObjectResult<GetAllOrders_Result> GetAllOrders()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllOrders_Result>("GetAllOrders");
         }
     }
 }

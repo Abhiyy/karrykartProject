@@ -7,12 +7,12 @@ app.service('GlobalService', ['$http', function ($http) {
     //this.websiteURL = 'http://localhost:15557/';
 
     //Test
-    //this.apiURL = 'http://testapi.karrykart.com/api/';
-    //this.websiteURL = 'http://test.karrykart.com/';
+    this.apiURL = 'http://testapi.karrykart.com/api/';
+    this.websiteURL = 'http://test.karrykart.com/';
 
     //Production
-    this.apiURL = 'http://api.karrykart.com/api/';
-    this.websiteURL = 'http://www.karrykart.com/';
+    //this.apiURL = 'http://api.karrykart.com/api/';
+    //this.websiteURL = 'http://www.karrykart.com/';
 
     this.isFilterOn = false;
 }]);

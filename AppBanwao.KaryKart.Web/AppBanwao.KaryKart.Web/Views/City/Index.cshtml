@@ -1,0 +1,38 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
+}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
+<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<h2>Cities List</h2>
+<div class="row">
+<div class="well whiteBack">
+    <table id="cities" class="dataTable table table-striped"></table>
+</div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        BuildCityList();
+    });
+
+    function BuildCityList()
+    {
+        $.ajax('@Url.Action("GetData","City")', {
+            type: 'GET',  // http method
+           // data: { type: vType },  // data to submit
+            success: function (datas, status, xhr) {
+                $('#cities').DataTable({
+
+                    data: datas,
+                    "columns": [
+                        { "data": "ID", 'title': 'ID' },
+                        { "data": "Name", 'title': 'Name' }
+                    ]
+                });
+            },
+            error: function (jqXhr, textStatus, errorMessage) {
+                $('p').append('Error' + errorMessage);
+            }
+        });
+    }
+</script>

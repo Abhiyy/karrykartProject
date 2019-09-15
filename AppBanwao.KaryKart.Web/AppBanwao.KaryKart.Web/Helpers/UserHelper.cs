@@ -323,6 +323,20 @@ namespace AppBanwao.KaryKart.Web.Helpers
             
         }
 
+        public List<UserModel> GetAllUsers()
+        {
+            _context = new karrykartEntities();
+
+            var uList = _context.Users.OrderByDescending(x=>x.DateCreated.Value).ToList();
+            List<UserModel> userList = new List<UserModel>();
+            foreach (var user in uList)
+            {
+                userList.Add(GetUser(user.EmailAddress.ToString()));
+            }
+
+            return userList;
+        }
+
         public bool UpdateUser(UserModel model)
         {
             if (model != null) {

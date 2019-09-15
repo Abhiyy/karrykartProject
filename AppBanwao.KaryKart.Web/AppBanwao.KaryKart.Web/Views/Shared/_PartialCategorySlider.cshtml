@@ -1,0 +1,130 @@
+﻿@{
+    var menu = ViewBag.ProductCategorySlider!=null?(List<AppBanwao.KarryKart.Model.Category>)ViewBag.ProductCategorySlider:null;
+    int count = 0, itemCount=0;
+}
+<style>
+    .carousel {
+        margin-bottom: 0;
+        padding: 0 40px 30px 40px;
+    }
+    /* Reposition the controls slightly */
+    .carousel-control {
+        left: -12px;
+    }
+
+        .carousel-control.right {
+            right: -12px;
+        }
+    /* Changes the position of the indicators */
+    .carousel-indicators {
+        right: 50%;
+        top: auto;
+        bottom: 0px;
+        margin-right: -19px;
+    }
+        /* Changes the colour of the indicators */
+        .carousel-indicators li {
+            background: #c0c0c0;
+        }
+
+        .carousel-indicators .active {
+            background: #333333;
+        }
+
+    .carousel-control.left {
+        background-image: none !important;
+        /*background-image: -o-linear-gradient(left, rgba(0,0,0,0.5) 0, rgba(0,0,0,0.0001) 100%);
+    background-image: linear-gradient(to right, rgba(0,0,0,0.5) 0, rgba(0,0,0,0.0001) 100%);
+    background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#80000000', endColorstr='#00000000', GradientType=1);*/
+        color: #19647e;
+        top: 15%;
+        width: 5%;
+    }
+
+    .carousel-control.right {
+        background-image: none !important;
+        /*background-image: -o-linear-gradient(left, rgba(0,0,0,0.5) 0, rgba(0,0,0,0.0001) 100%);
+    background-image: linear-gradient(to right, rgba(0,0,0,0.5) 0, rgba(0,0,0,0.0001) 100%);
+    background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#80000000', endColorstr='#00000000', GradientType=1);*/
+        color: #19647e;
+        top: 15%;
+        width: 5%;
+    }
+</style>
+
+<div class="row" id="categoryMenu" style="display:none">
+    <div class="col-sm-12">
+        <div class="panel productCategories panel-default">
+            <div class="panel-heading bluegreenGradient text-center">
+                <h5 class="text-uppercase">Categories</h5>
+            </div>
+            <div class="panel-body">
+                <div id="categoryCarousel" class="carousel slide">
+
+                    @if(menu!=null)
+                    {
+                    <!-- Carousel items -->
+                    <div class="carousel-inner">
+                        @foreach (var item in menu)
+                        {
+                            if(itemCount==0)
+                            {
+                            <div class="item active">
+                        	<div class="row-fluid text-center">
+                                <div class="col-sm-1">
+                          <a href="@Url.Action("Index", "CategoryProducts", new { id = item.CategoryID })" class="">
+                          <img src="@Url.Content(item.ImageLink)" class="img-circle img-responsive" alt="Image"/> @item.Name
+                            </a>
+                               </div> 
+                                 </div>
+                             </div> 
+                            count++;
+                            if(count==12)
+                            {
+                            itemCount++;
+                            }
+                            }else{
+                            <div class="item">
+                        	<div class="row-fluid text-center">
+                                 <div class="col-sm-1">
+                          <a href="@Url.Action("Index", "CategoryProducts", new { id = item.CategoryID })" class="">
+                          <img src="@Url.Content(item.ImageLink)" class="img-circle" alt="Image" style="max-width:100%;" /> @item.Name
+                            </a>
+                             
+                            </div>
+                            </div>  
+                            </div>  
+                                count++;
+                            }
+                            
+                        }
+
+
+
+                        </div><!--/carousel-inner-->
+                    }
+                <a class="left carousel-control" href="#categoryCarousel" data-slide="prev"><i class="fa fa-3x fa-angle-left"></i></a>
+                <a class="right carousel-control" href="#categoryCarousel" data-slide="next"><i class="fa fa-3x fa-angle-right"></i></a>
+                </div><!--/categoryCarousel-->
+                    </div>
+                </div>
+                <!--/well-->
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#categoryCarousel').carousel({
+                    interval: false
+                })
+            });
+
+            function ShowMenu(show) {
+                if(show)
+                    $('#categoryMenu').show();
+                else
+                    $('#categoryMenu').hide();
+            }
+        </script>

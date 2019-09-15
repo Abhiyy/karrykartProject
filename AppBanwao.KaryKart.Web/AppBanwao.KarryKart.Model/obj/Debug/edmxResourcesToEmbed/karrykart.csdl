@@ -148,6 +148,27 @@
     </AssociationSet>
     <FunctionImport Name="UpdatePageHit" />
     <FunctionImport Name="GetDashBoardCards" ReturnType="Collection(KarrykartModel.GetDashBoardCards_Result)" />
+    <FunctionImport Name="GetSalesRevenue" ReturnType="Collection(KarrykartModel.GetSalesRevenue_Result)">
+      <Parameter Name="for" Mode="In" Type="String" />
+    </FunctionImport>
+    <EntitySet Name="KKExpenses" EntityType="KarrykartModel.KKExpense" />
+    <EntitySet Name="TredingProducts" EntityType="KarrykartModel.TredingProduct" />
+    <EntitySet Name="VideoLogs" EntityType="KarrykartModel.VideoLog" />
+    <AssociationSet Name="FK_VideoLog_Users" Association="KarrykartModel.FK_VideoLog_Users">
+      <End Role="User" EntitySet="Users" />
+      <End Role="VideoLog" EntitySet="VideoLogs" />
+    </AssociationSet>
+    <FunctionImport Name="GetAllOrders" ReturnType="Collection(KarrykartModel.GetAllOrders_Result)" />
+    <EntitySet Name="OrderJourneys" EntityType="KarrykartModel.OrderJourney" />
+    <EntitySet Name="UserAlerts" EntityType="KarrykartModel.UserAlert" />
+    <AssociationSet Name="FK_OrderJourney_Order1" Association="KarrykartModel.FK_OrderJourney_Order1">
+      <End Role="Order" EntitySet="Orders" />
+      <End Role="OrderJourney" EntitySet="OrderJourneys" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserAlert_Users" Association="KarrykartModel.FK_UserAlert_Users">
+      <End Role="User" EntitySet="Users" />
+      <End Role="UserAlert" EntitySet="UserAlerts" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Brand">
     <Key>
@@ -166,6 +187,8 @@
     <Property Name="Name" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
     <NavigationProperty Name="Products" Relationship="KarrykartModel.FK__Product__Categor__398D8EEE" FromRole="Category" ToRole="Product" />
     <NavigationProperty Name="Products1" Relationship="KarrykartModel.FK__Product__Categor__412EB0B6" FromRole="Category" ToRole="Product" />
+    <Property Type="String" Name="ImageLink" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Type="Boolean" Name="Active" />
   </EntityType>
   <EntityType Name="Country">
     <Key>
@@ -355,6 +378,7 @@
     </Key>
     <Property Name="CityID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
     <Property Name="Name" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Type="Int32" Name="StateID" />
   </EntityType>
   <EntityType Name="refSaluation">
     <Key>
@@ -369,6 +393,7 @@
     </Key>
     <Property Name="StateID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
     <Property Name="Name" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Type="Int32" Name="CountryID" />
   </EntityType>
   <EntityType Name="Role">
     <Key>
@@ -698,6 +723,7 @@
     <Property Type="DateTime" Name="DeliveredOn" Precision="3" />
     <Property Type="Boolean" Name="GuestCheckout" />
     <Property Type="Int32" Name="DeliveryAddressID" />
+    <NavigationProperty Name="OrderJourneys" Relationship="KarrykartModel.FK_OrderJourney_Order1" FromRole="Order" ToRole="OrderJourney" />
   </EntityType>
   <EntityType Name="OrderProduct">
     <Key>
@@ -762,6 +788,8 @@
     <NavigationProperty Name="UserAddressDetails" Relationship="KarrykartModel.FK_UserAddressDetail_Users" FromRole="User" ToRole="UserAddressDetail" />
     <NavigationProperty Name="UserDetails" Relationship="KarrykartModel.FK_UserDetail_Users" FromRole="User" ToRole="UserDetail" />
     <NavigationProperty Name="UserLogins" Relationship="KarrykartModel.FK_UserLogin_Users" FromRole="User" ToRole="UserLogin" />
+    <NavigationProperty Name="VideoLogs" Relationship="KarrykartModel.FK_VideoLog_Users" FromRole="User" ToRole="VideoLog" />
+    <NavigationProperty Name="UserAlerts" Relationship="KarrykartModel.FK_UserAlert_Users" FromRole="User" ToRole="UserAlert" />
   </EntityType>
   <Association Name="FK_Users_Roles">
     <End Type="KarrykartModel.Role" Role="Role" Multiplicity="0..1" />
@@ -919,4 +947,109 @@
     <Property Type="String" Name="Name" Nullable="true" MaxLength="30" />
     <Property Type="Int32" Name="CardCount" Nullable="true" />
   </ComplexType>
+  <ComplexType Name="GetSalesRevenue_Result">
+    <Property Type="String" Name="Category" Nullable="false" MaxLength="3" />
+    <Property Type="Decimal" Name="Value" Nullable="true" Precision="38" Scale="2" />
+  </ComplexType>
+  <EntityType Name="KKExpense">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="Description" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Type="Decimal" Name="Amount" Precision="18" Scale="2" />
+    <Property Type="DateTime" Name="DoneOn" Precision="3" />
+    <Property Type="String" Name="DoneBy" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="TredingProduct">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int32" Name="Id" Nullable="false" />
+    <Property Type="Guid" Name="ProductID" />
+    <Property Type="DateTime" Name="CreatedOn" Precision="3" />
+    <Property Type="DateTime" Name="UpdatedOn" Precision="3" />
+    <Property Type="Guid" Name="CreatedBy" />
+    <Property Type="Guid" Name="UpdatedBy" />
+  </EntityType>
+  <EntityType Name="VideoLog">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="Title" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Description" MaxLength="400" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Transcript" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Type="Guid" Name="OwnerID" />
+    <Property Type="String" Name="Link" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Type="Int64" Name="LikeCount" />
+    <Property Type="Int64" Name="ViewCount" />
+    <NavigationProperty Name="User" Relationship="KarrykartModel.FK_VideoLog_Users" FromRole="VideoLog" ToRole="User" />
+  </EntityType>
+  <Association Name="FK_VideoLog_Users">
+    <End Type="KarrykartModel.User" Role="User" Multiplicity="0..1" />
+    <End Type="KarrykartModel.VideoLog" Role="VideoLog" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="VideoLog">
+        <PropertyRef Name="OwnerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <ComplexType Name="GetAllOrders_Result">
+    <Property Type="Guid" Name="OrderID" Nullable="false" />
+    <Property Type="String" Name="IsGuest" Nullable="false" MaxLength="3" />
+    <Property Type="DateTime" Name="PlaceOn" Nullable="true" Precision="23" />
+    <Property Type="String" Name="EmailAddress" Nullable="true" MaxLength="255" />
+    <Property Type="String" Name="OrderStatus" Nullable="true" MaxLength="50" />
+  </ComplexType>
+  <EntityType Name="OrderJourney">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Guid" Name="OrderID" />
+    <Property Type="Int32" Name="OrderStatusID" />
+    <Property Type="String" Name="OrderStatus" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Type="DateTime" Name="CreatedAt" Precision="3" />
+    <Property Type="String" Name="CreatedBy" MaxLength="155" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Order" Relationship="KarrykartModel.FK_OrderJourney_Order1" FromRole="OrderJourney" ToRole="Order" />
+  </EntityType>
+  <EntityType Name="UserAlert">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Guid" Name="UserID" />
+    <Property Type="String" Name="Message" MaxLength="400" FixedLength="false" Unicode="false" />
+    <Property Type="Boolean" Name="Seen" />
+    <Property Type="DateTime" Name="CreatedAt" Precision="3" />
+    <NavigationProperty Name="User" Relationship="KarrykartModel.FK_UserAlert_Users" FromRole="UserAlert" ToRole="User" />
+  </EntityType>
+  <Association Name="FK_OrderJourney_Order1">
+    <End Type="KarrykartModel.Order" Role="Order" Multiplicity="0..1" />
+    <End Type="KarrykartModel.OrderJourney" Role="OrderJourney" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Order">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="OrderJourney">
+        <PropertyRef Name="OrderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserAlert_Users">
+    <End Type="KarrykartModel.User" Role="User" Multiplicity="0..1" />
+    <End Type="KarrykartModel.UserAlert" Role="UserAlert" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="UserAlert">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

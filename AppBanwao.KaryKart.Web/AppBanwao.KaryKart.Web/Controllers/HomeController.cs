@@ -28,7 +28,8 @@ namespace AppBanwao.KaryKart.Web.Controllers
                     var cards = _dbContext.GetDashBoardCards().ToList();
                     ViewBag.AdminCards = cards;
                 }
-               
+
+                ViewBag.ProductCategorySlider = _dbContext.Categories.Where(x => x.Active.Value).ToList();
             }
         }
 

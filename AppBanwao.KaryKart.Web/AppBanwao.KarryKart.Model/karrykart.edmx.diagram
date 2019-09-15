@@ -72,6 +72,14 @@
         <EntityTypeShape EntityType="KarrykartModel.Panel" Width="1.5" PointX="9.7607070141288936" PointY="28.436653821001133" />
         <EntityTypeShape EntityType="KarrykartModel.PanelItem" Width="1.5" PointX="3.1509694825629557" PointY="7.4224322621815055" />
         <AssociationConnector Association="KarrykartModel.FK__PanelItem__Link__0F624AF8" />
+        <EntityTypeShape EntityType="KarrykartModel.KKExpense" Width="1.5" PointX="1.482526817118063" PointY="28.130139617309972" />
+        <EntityTypeShape EntityType="KarrykartModel.TredingProduct" Width="1.5" PointX="9.8430695728599424" PointY="3.536510707594692" />
+        <EntityTypeShape EntityType="KarrykartModel.VideoLog" Width="1.5" PointX="7.3956009519265971" PointY="19.040691190883837" />
+        <AssociationConnector Association="KarrykartModel.FK_VideoLog_Users" />
+        <EntityTypeShape EntityType="KarrykartModel.OrderJourney" Width="1.5" PointX="4.4049368986882911" PointY="23.286745275969963" />
+        <EntityTypeShape EntityType="KarrykartModel.UserAlert" Width="1.5" PointX="0.26708286826828626" PointY="4.98167617851015" />
+        <AssociationConnector Association="KarrykartModel.FK_OrderJourney_Order1" />
+        <AssociationConnector Association="KarrykartModel.FK_UserAlert_Users" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

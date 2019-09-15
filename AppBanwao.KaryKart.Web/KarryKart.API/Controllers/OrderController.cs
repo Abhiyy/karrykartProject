@@ -13,17 +13,30 @@ namespace KarryKart.API.Controllers
     {
         OrderHelper _orderHelper = null;
          //GET api/<controller>
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/<controller>/5
-        public List<OrderDetailModel> Get(string OrderID, string UserID, string CartID)
+        public List<OrderDetailModel> Get()
         {
             try
             {
                 _orderHelper = new OrderHelper();
+                return _orderHelper.GetOrders();
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        // GET api/<controller>/5
+        public List<OrderDetailModel> Get(string OrderID, string UserID, string CartID, bool ForAdmin=false)
+        {
+            try
+            {
+                _orderHelper = new OrderHelper();
+                
+                if (!string.IsNullOrEmpty(OrderID) && ForAdmin)
+                { 
+                //return _orderHelper.GetOrder(Guid.Parse(OrderID));
+                }
                 if (!string.IsNullOrEmpty(OrderID))
                 {
                     return _orderHelper.GetOrderByCartID(Guid.Parse(UserID), Guid.Parse(CartID));
