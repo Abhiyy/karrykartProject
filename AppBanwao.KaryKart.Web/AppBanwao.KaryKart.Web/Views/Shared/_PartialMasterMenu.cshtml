@@ -2,46 +2,17 @@
 @{
     string fullname = (User as CustomPrincipal) != null?(User as CustomPrincipal).FullName:string.Empty;
     bool profileComplete = (User as CustomPrincipal) != null ? (User as CustomPrincipal).ProfileComplete : false;
+    string UserID =  (User as CustomPrincipal) != null ? (User as CustomPrincipal).UserID.ToString() : string.Empty;
 }  
 
-  
-@*<nav class="bluegreen navbar navbar-inverse ">*@
-  @*<div class="container">*@
-    @*<div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">Brand</a>
-    </div>*@
 
     <div class="collapse navbar-collapse pull-right" id="bs-example-navbar-collapse-2">
-      @*<ul class="nav navbar-nav">
-        <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-        <li><a href="#">Link</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-            <li class="divider"></li>
-            <li><a href="#">One more separated link</a></li>
-          </ul>
-        </li>
-      </ul>*@
       
-    @*  <ul class="nav navbar-nav">*@
-        
         @if (!(User.Identity.IsAuthenticated))
         {
-            @*<li>*@
+
                 <a href="#" onclick="OpenModal('loginModal')" class="btn btn-primary bluegreen "><i class="fa fa-sign-in"></i> Login/Register</a>
-           @* </li>*@
+           
         }
         else
         {
@@ -67,5 +38,12 @@
        
      
     </div>
-  @*</div>*@
-@*</nav>*@
+<script type="text/javascript">
+    function storeUserID() {
+        if (sessionStorage.getItem("UserID") == null) {
+            sessionStorage.setItem('@UserID');
+        }
+    }
+
+    storeUserID();
+</script>

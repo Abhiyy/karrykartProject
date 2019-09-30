@@ -61,5 +61,10 @@ namespace AppBanwao.KaryKart.Web.Helpers
             }
         }
 
+        //public string SendPostRequest(string apiname)
+        //{ 
+        //_client.PostAsync(apiname
+        //}
+
     }
 }

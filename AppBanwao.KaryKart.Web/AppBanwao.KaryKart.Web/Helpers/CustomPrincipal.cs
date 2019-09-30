@@ -17,6 +17,8 @@ namespace AppBanwao.KaryKart.Web.Helpers
 
         bool ProfileComplete { get; set; }
 
+        Guid UserID { get; set; }
+
        // string MarketID { get; set; }
 
         //string MarketName { get; set; }
@@ -56,6 +58,7 @@ namespace AppBanwao.KaryKart.Web.Helpers
         
         public string FullName { get { return FirstName + " " + LastName; } }
 
+        public Guid UserID { get; set; }
     }
 
     public class CustomPrincipalSerialize
@@ -69,6 +72,8 @@ namespace AppBanwao.KaryKart.Web.Helpers
         public bool ProfileComplete { get; set; }
 
         public string FullName { get { return FirstName + " " + LastName; } }
+
+        public Guid UserID { get; set; }
        
     }
 }

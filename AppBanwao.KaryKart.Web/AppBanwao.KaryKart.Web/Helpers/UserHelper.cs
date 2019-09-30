@@ -164,6 +164,7 @@ namespace AppBanwao.KaryKart.Web.Helpers
             serializeModel.FirstName = (!string.IsNullOrEmpty(authUser.UserDetails.FirstOrDefault().FirstName)) ? authUser.UserDetails.FirstOrDefault().FirstName : serializeModel.UserName;
             serializeModel.LastName = (!string.IsNullOrEmpty(authUser.UserDetails.FirstOrDefault().LastName)) ? authUser.UserDetails.FirstOrDefault().LastName : string.Empty;
             serializeModel.ProfileComplete = authUser.ProfileComplete.Value;
+            serializeModel.UserID = authUser.UserID;
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             string userData = serializer.Serialize(serializeModel);
 

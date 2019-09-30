@@ -1,0 +1,73 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutCustomerMaster.cshtml";
+}
+<style>
+    .featureList {
+    list-style:none;
+    padding-left:0
+    }
+</style>
+<script src="~/Scripts/App/ProductDetailsCtrl.js"></script>
+
+<div class="row mt-1">
+
+    <div class="col-md-12">
+        <ul class="breadcrumb">
+            <li><a href="@Url.Action("Index","Home")">Home</a></li>
+            <li class="active">Product</li>
+        </ul>
+    </div>
+</div>
+
+<div class="row" ng-controller="ProductDetailsController">
+    <div class="col-sm-9">
+        <div class="row">
+        <div class="col-sm-8">
+            <div class="row">
+            <div class="col-sm-2">
+            <div class="thumbnailsContainer" ng-repeat="pi in product.Images">
+                <img src="{{pi.ImageLink}}" alt="productThumbnails" class="img img-responsive img-thumbnail" onfocus="loadImage(pi)" onmouseover="loadImage(pi)" />
+            </div>
+            </div>
+                <div class="col-sm-10">
+                <div class="fullImageContainer">
+                    <img src="{{fullImageSrc}}" alt="product" class="img img-responive animated fadeIn" />
+                </div> 
+                </div>
+                </div>
+        </div>
+        <div class="col-sm-4">
+            <h2 class="animated jackInTheBox">{{product.Name}}</h2>
+            <p class="animated heartBeat">By <label class="label label-primary bluegreen">{{product.BrandName}}</label> </p>
+            <hr />
+            <h3 class="animated shake"><i class="fa fa-inr text-danger"></i><span class="text-danger"> {{product.Prices[0].Price}} </span></h3>
+            <h5 ng-class="{'text-success': inStockClass, 'text-danger': !inStockClass}"><strong>{{product.ProductSizeMappings[0].Stock>0?"In Stock":"Out of Stock"}}</strong></h5>
+            <hr />
+            <h4 class="text-strong"> Product Description</h4>
+            <p>{{product.Description}}</p>
+            <hr />
+            <h4 class="text-strong">Features</h4>
+            <div class="panel panel-default">
+            <div class="panel-body">
+                <ul class="featureList" ng-repeat="f in product.Features">
+                    <li><i class="fa fa-check"></i> {{f.Feature}}</li>
+                </ul>
+            </div>
+</div>
+            
+        </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="panel panel-default">
+  <div class="panel-body">
+      
+      <p >Cost: <i class="fa fa-inr text-danger"></i><span class="text-danger"> {{cartPrice}}</span> <span> +  {{shippingCost==0? "Free Delivery" : shippingCost}}</span></p>
+      <p>Quantity: <select ng-options="q as q for q in quantities" ng-model="quantity" ng-change="changeQuantity()"></select></p>
+      <button class="btn btn-block primary-override" ng-click="addToCart()"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+      <button class="btn btn-block redpink"><i class="fa fa-heart"></i> Favourites</button>
+  </div>
+</div>
+    </div>
+</div>

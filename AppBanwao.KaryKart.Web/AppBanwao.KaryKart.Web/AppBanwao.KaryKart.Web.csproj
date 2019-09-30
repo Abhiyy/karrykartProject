@@ -939,6 +939,7 @@
     <Content Include="Scripts\App\MyAccountCtrl.js" />
     <Content Include="Scripts\App\OrderCtrl.js" />
     <Content Include="Scripts\App\ProductCtrl.js" />
+    <Content Include="Scripts\App\ProductDetailsCtrl.js" />
     <Content Include="Scripts\App\RegisterCtrl.js" />
     <Content Include="Scripts\App\SearchResultsCtrl.js" />
     <Content Include="Content\kendo\2017.1.118-source\web\type-office365.less" />
@@ -2740,6 +2741,8 @@
     <Content Include="Scripts\knockout-2.1.0.debug.js" />
     <Content Include="Scripts\knockout-2.1.0.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
+    <Content Include="Scripts\ngStorage.js" />
+    <Content Include="Scripts\ngStorage.min.js" />
     <Content Include="Scripts\popper-utils.js" />
     <Content Include="Scripts\popper-utils.min.js" />
     <Content Include="Scripts\popper.js" />
@@ -3383,6 +3386,9 @@
     <Content Include="Views\Order\Details.cshtml" />
     <Content Include="Views\Shared\_PartialReact.cshtml" />
     <Content Include="Views\Shared\_PartialKendo.cshtml" />
+    <Content Include="Views\ProductDetails\Index.cshtml" />
+    <Content Include="Views\Shared\_LayoutCustomerMaster.cshtml" />
+    <Content Include="Views\Shared\_Notifications.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Images\Product\" />

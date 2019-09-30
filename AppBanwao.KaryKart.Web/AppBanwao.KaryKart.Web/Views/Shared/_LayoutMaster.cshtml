@@ -14,9 +14,10 @@
     <script src="~/Scripts/angular.min.js"></script>
     <script src="~/Scripts/angular-sanitize.min.js"></script>
     <script src="~/Scripts/App/GlobalService.js"></script>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.9.0/ui-bootstrap-tpls.min.js"></script>
     <script src="//d3js.org/d3.v4.min.js"></script>
-
+    <script src="~/Scripts/ngStorage.min.js"></script>
     <title>@ViewBag.Title</title>
 </head>
 <body ng-app="karrykartApp">
@@ -64,9 +65,12 @@
             @Html.Partial("_PartialMasterMenu")
         </div>*@
 
-
+       
         @Html.Partial("_PartialCategorySlider")
+         @if(User.IsInRole("Customer"))
+        {
         @Html.Partial("_PartialSlider")
+        }
 
     </div>
     <div class="container">
@@ -75,6 +79,7 @@
                 <div class="col-sm-9">
                     @Html.Partial("_PartialMessages")
                     @Html.Partial("_PartialLogin")
+                    @Html.Partial("_Notifications")
                     @RenderBody()
                 </div>
                 <div class="col-sm-3">

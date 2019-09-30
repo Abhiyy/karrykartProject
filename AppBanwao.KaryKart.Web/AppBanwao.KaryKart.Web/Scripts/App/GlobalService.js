@@ -1,4 +1,4 @@
-﻿var app = angular.module("karrykartApp", ['ngSanitize', 'ui.bootstrap']);
+﻿var app = angular.module("karrykartApp", ['ngSanitize', 'ui.bootstrap', 'ngStorage']);
 
 app.service('GlobalService', ['$http', function ($http) {
 

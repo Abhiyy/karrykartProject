@@ -10,3 +10,9 @@ D:\My work\DA work\Repo\kk\AppBanwao.KaryKart.Web\DA.EmailEngine\bin\Release\DA.
 D:\My work\DA work\Repo\kk\AppBanwao.KaryKart.Web\DA.EmailEngine\obj\Release\DA.EmailEngine.csprojResolveAssemblyReference.cache
 D:\My work\DA work\Repo\kk\AppBanwao.KaryKart.Web\DA.EmailEngine\obj\Release\DA.EmailEngine.dll
 D:\My work\DA work\Repo\kk\AppBanwao.KaryKart.Web\DA.EmailEngine\obj\Release\DA.EmailEngine.pdb
+D:\My work\DA work\Repo\KarryKart\AppBanwao.KaryKart.Web\DA.EmailEngine\bin\Release\DA.EmailEngine.dll.config
+D:\My work\DA work\Repo\KarryKart\AppBanwao.KaryKart.Web\DA.EmailEngine\bin\Release\DA.EmailEngine.dll
+D:\My work\DA work\Repo\KarryKart\AppBanwao.KaryKart.Web\DA.EmailEngine\bin\Release\DA.EmailEngine.pdb
+D:\My work\DA work\Repo\KarryKart\AppBanwao.KaryKart.Web\DA.EmailEngine\obj\Release\DA.EmailEngine.csprojResolveAssemblyReference.cache
+D:\My work\DA work\Repo\KarryKart\AppBanwao.KaryKart.Web\DA.EmailEngine\obj\Release\DA.EmailEngine.dll
+D:\My work\DA work\Repo\KarryKart\AppBanwao.KaryKart.Web\DA.EmailEngine\obj\Release\DA.EmailEngine.pdb

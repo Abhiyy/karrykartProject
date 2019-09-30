@@ -12,6 +12,8 @@
     <EntitySetMapping Name="Categories">
       <EntityTypeMapping TypeName="KarrykartModel.Category">
         <MappingFragment StoreEntitySet="Category">
+          <ScalarProperty Name="Active" ColumnName="Active" />
+          <ScalarProperty Name="ImageLink" ColumnName="ImageLink" />
           <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
         </MappingFragment>
@@ -190,6 +192,7 @@
     <EntitySetMapping Name="refCities">
       <EntityTypeMapping TypeName="KarrykartModel.refCity">
         <MappingFragment StoreEntitySet="refCity">
+          <ScalarProperty Name="StateID" ColumnName="StateID" />
           <ScalarProperty Name="CityID" ColumnName="CityID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
         </MappingFragment>
@@ -206,6 +209,7 @@
     <EntitySetMapping Name="refStates">
       <EntityTypeMapping TypeName="KarrykartModel.refState">
         <MappingFragment StoreEntitySet="refState">
+          <ScalarProperty Name="CountryID" ColumnName="CountryID" />
           <ScalarProperty Name="StateID" ColumnName="StateID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
         </MappingFragment>
@@ -459,5 +463,76 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <EntitySetMapping Name="KKExpenses">
+      <EntityTypeMapping TypeName="KarrykartModel.KKExpense">
+        <MappingFragment StoreEntitySet="KKExpense">
+          <ScalarProperty Name="DoneBy" ColumnName="DoneBy" />
+          <ScalarProperty Name="DoneOn" ColumnName="DoneOn" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TredingProducts">
+      <EntityTypeMapping TypeName="KarrykartModel.TredingProduct">
+        <MappingFragment StoreEntitySet="TredingProduct">
+          <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VideoLogs">
+      <EntityTypeMapping TypeName="KarrykartModel.VideoLog">
+        <MappingFragment StoreEntitySet="VideoLog">
+          <ScalarProperty Name="ViewCount" ColumnName="ViewCount" />
+          <ScalarProperty Name="LikeCount" ColumnName="LikeCount" />
+          <ScalarProperty Name="Link" ColumnName="Link" />
+          <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+          <ScalarProperty Name="Transcript" ColumnName="Transcript" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="GetAllOrders" FunctionName="KarrykartModel.Store.GetAllOrders">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="KarrykartModel.GetAllOrders_Result">
+          <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+          <ScalarProperty Name="IsGuest" ColumnName="IsGuest" />
+          <ScalarProperty Name="PlaceOn" ColumnName="PlaceOn" />
+          <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+          <ScalarProperty Name="OrderStatus" ColumnName="OrderStatus" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="OrderJourneys">
+      <EntityTypeMapping TypeName="KarrykartModel.OrderJourney">
+        <MappingFragment StoreEntitySet="OrderJourney">
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+          <ScalarProperty Name="OrderStatus" ColumnName="OrderStatus" />
+          <ScalarProperty Name="OrderStatusID" ColumnName="OrderStatusID" />
+          <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserAlerts">
+      <EntityTypeMapping TypeName="KarrykartModel.UserAlert">
+        <MappingFragment StoreEntitySet="UserAlert">
+          <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+          <ScalarProperty Name="Seen" ColumnName="Seen" />
+          <ScalarProperty Name="Message" ColumnName="Message" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

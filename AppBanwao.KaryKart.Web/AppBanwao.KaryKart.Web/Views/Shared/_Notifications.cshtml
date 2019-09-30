@@ -1,0 +1,22 @@
+﻿<div id="toast">
+    <span id='msg'> Some text some message..</span> <button type="button" class="close pull-right" onclick="closeNotification()"><span aria-hidden="true">&times;</span> </button> </div>
+<script type="text/javascript">
+    function showNotification(text, time) {
+        // Get the snackbar DIV
+        var x = document.getElementById("toast");
+        var msg = document.getElementById("msg");
+        msg.innerHTML = text;
+        // Add the "show" class to DIV
+        x.className = "show";
+
+        // After 3 seconds, remove the show class from DIV
+        if(time != 0)
+            setTimeout(function () { x.className = x.className.replace("show", ""); }, time);
+    }
+
+    function closeNotification()
+    {
+        var x = document.getElementById("toast");
+        x.className = "";
+    }
+</script>

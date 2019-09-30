@@ -17,7 +17,7 @@
     }
 
     $scope.viewProduct = function (productID) {
-     $window.location.href = GlobalService.websiteURL + 'ProductDetails/' + productID;
+     $window.location.href = GlobalService.websiteURL + 'ProductDetails/Index/' + productID;
     };
 }
 ]);
