@@ -269,6 +269,9 @@ background-color:#35495e !important;
 color:#fff !important;
 
 }
+.gotocart {
+margin-top:7rem !important;
+}
 
 #toast {
   visibility: hidden; /* Hidden by default. Visible on click */

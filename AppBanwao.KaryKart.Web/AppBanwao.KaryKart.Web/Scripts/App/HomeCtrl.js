@@ -2,7 +2,6 @@
 
     $scope.AvailableProducts = [];
     $scope.selectedProduct = undefined;
- 
     loadAllProducts();
  
     
@@ -26,5 +25,17 @@
 
         $window.location.href = GlobalService.websiteURL + 'Search/Results#?search=' + $scope.selectedProduct;// + $location.search('search',);
     };
+}
+]);
+
+app.controller("CartController", ['$scope', '$location', '$http', '$window', 'GlobalService', '$rootScope','cartService', function ($scope, $location, $http, $window, GlobalService, $rootScope, cartService) {
+    let cartInfo = localStorage.getItem('cart')!=null?JSON.parse(localStorage.getItem('cart')):{};
+
+    $scope.cartCount =  cartInfo!=null ? cartInfo.ProductCount:0; // cartService.getCartCount();
+    $scope.cart = cartInfo;
+    $rootScope.$on('cartUpdate', function (event, data) {
+        console.log("event raised!!");
+        $scope.cartCount = data;
+    });
 }
 ]);

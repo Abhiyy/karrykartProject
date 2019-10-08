@@ -1,0 +1,32 @@
+﻿@{
+    ViewBag.Title = "Your Cart";
+    Layout = "~/Views/Shared/_LayoutCustomerMaster.cshtml";
+}
+<script src="~/Scripts/App/CartDetailsCtrl.js"></script>
+<div class="row mt-1">
+
+    <div class="col-md-12">
+        <ul class="breadcrumb">
+            <li><a href="@Url.Action("Index","Home")">Home</a></li>
+            <li class="active">Cart</li>
+        </ul>
+    </div>
+</div>
+<div class="row" ng-controller="CartDetailsController">
+   
+    <div class="col-sm-9">
+        <h2>Cart Details</h2>
+        <div class="row">
+    
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="panel panel-default">
+  <div class="panel-body">
+      
+     
+
+  </div>
+</div>
+    </div>
+</div>

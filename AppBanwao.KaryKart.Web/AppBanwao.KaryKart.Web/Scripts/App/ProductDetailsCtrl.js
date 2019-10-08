@@ -1,16 +1,8 @@
-﻿app.controller("ProductDetailsController", ['$scope', '$http', '$window', '$location', 'GlobalService', '$localStorage', function ($scope, $http, $window, $location, GlobalService, $localStorage) {
+﻿app.controller("ProductDetailsController", ['$scope', '$http', '$window', '$location', 'GlobalService', '$localStorage', '$rootScope', 'cartService', function ($scope, $http, $window, $location, GlobalService, $localStorage, $rootScope,cartService) {
     $scope.basicDetailsEditing = false;
     var apiURL = GlobalService.apiURL + "product?id=" + $location.absUrl().substring(($location.absUrl().lastIndexOf("/") + 1));//$http.get(apiURL + "product?id=" + $location.absUrl().substring(($location.absUrl().lastIndexOf("/") + 1));
     $scope.selected = {};
     $scope.isAddPSS = false;
-    $scope.categories;
-    $scope.subcategories;
-    $scope.brands;
-    $scope.isAddFeature = false;
-    $scope.isAddImage = false;
-    $scope.sizetypes;
-    $scope.units;
-    $scope.sizes;
     $scope.fullImageSrc;
     $scope.inStockClass=false;
     $scope.quantity = 1;
@@ -19,43 +11,7 @@
     $scope.quantitylimit = 30;
     $scope.shippingCost = 0;
     $scope.cart;
-    $http.get("/Product/GetCategories").success(function (data) {
-        $scope.categories = data;
-    }).error(function (status) {
-        //  alert(status);
-    });
-
-    $http.get("/Product/GetBrands").success(function (data) {
-        $scope.brands = data;
-    }).error(function (status) {
-        //  alert(status);
-    });
-
-    $http.get("/Product/GetSubCategories").success(function (data) {
-        $scope.subcategories = data;
-    }).error(function (status) {
-        //  alert(status);
-    });
-
-    $http.get("/Product/GetSizeTypes").success(function (data) {
-        $scope.sizetypes = data;
-    }).error(function (status) {
-        //  alert(status);
-    });
-
-    $http.get("/Product/GetUnits").success(function (data) {
-        $scope.units = data;
-    }).error(function (status) {
-        //  alert(status);
-    });
-
-
-    $http.get("/Product/GetSizes").success(function (data) {
-        $scope.sizes = data;
-    }).error(function (status) {
-        //  alert(status);
-    });
-
+    
     LoadProduct();
     BuildQuantity();
 
@@ -112,20 +68,19 @@
     }
 
     $scope.addToCart = function () {
-        console.log(sessionStorage.getItem('UserID'));
-        if (localStorage.getItem('cart') != null) {
-            // create cart
-            //showNotification("Item added to cart.", 4000);
-            //check for user session
-            
-            if (sessionStorage.getItem('UserID') != null) {
+        let cart = localStorage.getItem('cart')!=null?JSON.parse(localStorage.getItem('cart')):null;
+        let userID = localStorage.getItem('UserID'); 
+        if (cart != null) {
+            // update cart
+            console.log(cart);
+            if (userID != null && userID != "") {
                 $scope.cart = {
                     "ProductID": $scope.product.ProductID,
                     "CreateCart": false,
                     "Quantity": $scope.quantity,
                     "ProductCount": $scope.quantity,
-                    "CartID": localStorage.getItem('cart'),
-                    "User": sessionStorage.getItem('UserID')
+                    "CartID": cart.CartID,
+                    "User": userID
                 };
             } else {
                 $scope.cart = {
@@ -133,28 +88,59 @@
                     "CreateCart": false,
                     "Quantity": $scope.quantity,
                     "ProductCount": $scope.quantity,
-                    "CartID": localStorage.getItem('cart')
+                    "CartID": cart.CartID
                  };
             }
+            $http.put(GlobalService.apiURL + "cart",  $scope.cart ).success(function (responseData) {
+                
+                localStorage.setItem("cart", JSON.stringify(responseData));
+                LoadProduct();
+                // cartService.updateCart(responseData, responseData.ProductCount);
+                $scope.raiseCartUpdate('cartUpdate', responseData.ProductCount);
+                showNotification("Item added to cart.", 4000);
+                //  $scope.cartCount = responseData.ProductCount;
+
+            }).error(function (responseData) {
+                console.log("Error !" + responseData);
+            });
+
         } else {
-            //update cart
-            alert('Helllo');
+            //create cart
+            if (localStorage.getItem('UserID') != null && localStorage.getItem('UserID') != "") {
+                $scope.cart = {
+                    "ProductID": $scope.product.ProductID,
+                    "CreateCart": true,
+                    "Quantity": $scope.quantity,
+                    "ProductCount": $scope.quantity,
+                    "User": sessionStorage.getItem('UserID')
+                };
+            } else {
+                $scope.cart = {
+                    "ProductID": $scope.product.ProductID,
+                    "CreateCart": true,
+                    "Quantity": $scope.quantity,
+                    "ProductCount": $scope.quantity
+                };
+            }
+
+            $http.post(GlobalService.apiURL + "cart",  $scope.cart ).success(function (responseData) {
+                
+                localStorage.setItem("cart", JSON.stringify(responseData));
+                LoadProduct();
+               // cartService.updateCart(responseData, responseData.ProductCount);
+                $scope.raiseCartUpdate('cartUpdate', responseData.ProductCount);
+                showNotification("Item added to cart.", 4000);
+              //  $scope.cartCount = responseData.ProductCount;
+
+            }).error(function (responseData) {
+                console.log("Error !" + responseData);
+            });
         }
     };
     
-    $scope.createCart = function (data) {
-        $http.post(GlobalService.apiURL+"/cart", { cart: JSON.stringify(data) }).success(function (responseData) {
-            if (responseData.messagetype = "success") {
-                alert(responseData.message);
-                LoadProduct();
-                showNotification("Item added to cart.", 4000);
-
-            } else {
-                alert(responseData.message);
-            }
-        }).error(function (responseData) {
-            console.log("Error !" + responseData);
-        });
+    $scope.raiseCartUpdate = function (eventName, data) {
+        $rootScope.$emit(eventName, data);
+     
     };
 
     $scope.deleteProductFeature = function (id) {

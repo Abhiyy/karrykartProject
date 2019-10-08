@@ -139,6 +139,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BrandController.cs" />
+    <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\CategoryProductsController.cs" />
     <Compile Include="Controllers\ChartController.cs" />
@@ -931,6 +932,7 @@
     <Content Include="Scripts\angular-touch.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\App\CartService.js" />
     <Content Include="Scripts\App\CategoryProduct.js" />
     <Content Include="Scripts\App\ForgotPwdCtrl.js" />
     <Content Include="Scripts\App\GlobalService.js" />
@@ -3389,6 +3391,7 @@
     <Content Include="Views\ProductDetails\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutCustomerMaster.cshtml" />
     <Content Include="Views\Shared\_Notifications.cshtml" />
+    <Content Include="Views\Cart\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Images\Product\" />

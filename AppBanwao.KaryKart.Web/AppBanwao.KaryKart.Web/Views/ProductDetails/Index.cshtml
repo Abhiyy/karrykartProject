@@ -67,6 +67,8 @@
       <p>Quantity: <select ng-options="q as q for q in quantities" ng-model="quantity" ng-change="changeQuantity()"></select></p>
       <button class="btn btn-block primary-override" ng-click="addToCart()"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
       <button class="btn btn-block redpink"><i class="fa fa-heart"></i> Favourites</button>
+      <a href="@Url.Action("Index","Cart")" class="btn btn-block btn-primary bluegreen gotocart" ><i class="fa fa-hand-o-up"></i> Go to Cart</a>
+
   </div>
 </div>
     </div>

@@ -15,4 +15,5 @@ app.service('GlobalService', ['$http', function ($http) {
     //this.websiteURL = 'http://www.karrykart.com/';
 
     this.isFilterOn = false;
+    this.cartCount = 0;
 }]);

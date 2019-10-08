@@ -40,8 +40,8 @@
     </div>
 <script type="text/javascript">
     function storeUserID() {
-        if (sessionStorage.getItem("UserID") == null) {
-            sessionStorage.setItem('@UserID');
+        if (localStorage.getItem("UserID") == null || localStorage.getItem("UserID") == '') {
+            localStorage.setItem('UserID', '@UserID');
         }
     }
 
