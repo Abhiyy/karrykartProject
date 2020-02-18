@@ -2,6 +2,31 @@
     ViewBag.Title = "Your Cart";
     Layout = "~/Views/Shared/_LayoutCustomerMaster.cshtml";
 }
+<style>
+    .ml-1 {
+    margin-left:1rem;
+    }
+    .text-strong {
+    font-weight:bold;
+    }
+    .btn-delete {
+    margin-top:100%;
+    bottom:0;
+    }
+    .mb-1 {
+    margin-bottom:1rem;
+    }
+    .quantity-Box {
+    width:3rem;
+    text-align:center
+    }
+    .btn-inc-dec {
+    font:bold;
+    font-size:1.5rem;
+    border-radius:2.5rem
+    }
+
+</style>
 <script src="~/Scripts/App/CartDetailsCtrl.js"></script>
 <div class="row mt-1">
 
@@ -14,10 +39,32 @@
 </div>
 <div class="row" ng-controller="CartDetailsController">
    
-    <div class="col-sm-9">
-        <h2>Cart Details</h2>
-        <div class="row">
-    
+    <div class="col-sm-9 ">
+       
+        <div class="panel panel-default">
+        <h4 class="ml-1 text-strong">Cart Details ({{cart.CartCount}})</h4>
+            <hr />
+            <div ng-repeat="product in cart.Products">
+                <div class="row mb-1">
+                    <div class="col-sm-3 ml-1">
+                        <img class="img img-thumbnail" src="{{product.Images[0].ImageLink}}" />
+                    </div>
+                    <div class="col-sm-6 mr-1">
+                       <h3 class="text-strong"> {{product.Name}}</h3>
+                         <p class="animated heartBeat">By <label class="label label-primary bluegreen">{{product.BrandName}}</label> </p>
+                        <h4 class="text-strong"><i class="fa fa-inr"></i><span> {{product.Prices[0].Price}} </span></h4>
+                        <p>
+                            <br />
+                            <button ng-click="decreaseQuantity()" class="btn text-danger btn-inc-dec">-</button> 
+                            <input type="text" class="quantity-Box"  value="{{product.QuantitySelected}}" />
+                            <button ng-click="increaseQuantity()" class="btn text-success btn-inc-dec">+</button>
+                        </p>
+                    </div>
+                    <div class="col-sm-2">
+                        <button ng-click="removeProduct(product.ProductID)" class="btn btn-primary btn-delete">Remove Item <i class="fa fa-remove"></i></button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="col-sm-3">

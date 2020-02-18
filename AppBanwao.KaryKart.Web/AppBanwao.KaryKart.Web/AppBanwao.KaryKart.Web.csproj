@@ -932,6 +932,7 @@
     <Content Include="Scripts\angular-touch.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\App\CartDetailsCtrl.js" />
     <Content Include="Scripts\App\CartService.js" />
     <Content Include="Scripts\App\CategoryProduct.js" />
     <Content Include="Scripts\App\ForgotPwdCtrl.js" />
